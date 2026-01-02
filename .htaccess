@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# 1. Если запрос НЕ начинается с public/
+RewriteCond %{REQUEST_URI} !^/public/ [NC]
+# 2. И это не реально существующий файл (на случай если у вас там лежит favicon.ico или robots.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+# 3. И это не реально существующая папка
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Перенаправляем все запросы в папку public
+RewriteRule ^(.*)$ public/$1 [L]

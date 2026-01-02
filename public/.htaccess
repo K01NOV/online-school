@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Если запрашиваемый путь не является существующим файлом или папкой
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Перенаправляем всё на index.php и передаем путь как GET-параметр 'route'
+RewriteRule ^(.*)$ index.php?route=$1 [QSA,L]
