@@ -14,7 +14,7 @@ class Router{
         'home' => [PagesController::class, 'showHome'],
         'registration' => [PagesController::class, 'showRegistration'],
         'register' => [UserController::class, 'createUser'],
-        'profile' => [UserController::class, 'userRoom'],
+        'profile' => [PagesController::class, 'userRoom'],
         'login' => [UserController::class, 'login']
     ];
 

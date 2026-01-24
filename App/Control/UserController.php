@@ -66,9 +66,6 @@ class UserController{
             }
         }
     }
-    
-    function userRoom(){
-        $name = $_SESSION['name'] ?? 'Guest'; 
-        require_once __DIR__ . '/../../View/userRoom.php';
-    }
+
+
 }
