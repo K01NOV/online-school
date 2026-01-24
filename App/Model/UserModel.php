@@ -1,5 +1,6 @@
 <?php namespace App\Model;
 
+use Exception;
 use PDO;
 
 class UserModel{
@@ -19,18 +20,18 @@ class UserModel{
             $stmt->bindValue(":type", $user->type);
 
             if(!$stmt->execute()){
-                throw new \Exception("Не удалось создать пользователя, попробуйте еще раз");
+                throw new Exception("Не удалось создать пользователя, попробуйте еще раз");
             }
 
             if(!empty($user->nick)){
                 $userId = $this->conn->lastInsertId();
                 if (!$userId){
-                    throw new \Exception("Не удалось найти id, попробуйте еще раз");
+                    throw new Exception("Не удалось найти id, попробуйте еще раз");
                 } 
-                
+
                 $user->nick = $this->create_nickname($user->nick);
                 if(!$user->nick){
-                    throw new \Exception("Не удалось зарегистрировать ваш никнейм: " . $user->nick);
+                    throw new Exception("Не удалось зарегистрировать ваш никнейм: " . $user->nick);
                 }
 
                 $stmt = $this->conn->prepare("INSERT INTO usernames (user_id, title) VALUES (:id, :nick)");
@@ -44,7 +45,7 @@ class UserModel{
             $this->conn->commit();
             return true;
 
-        }catch (\Exception $e) {
+        }catch (Exception $e) {
             if ($this->conn->inTransaction()) {
                 $this->conn->rollBack();
             }
@@ -91,4 +92,22 @@ class UserModel{
 
         return $nick . "#" . str_pad($nextTag, 4, "0", STR_PAD_LEFT);
     }
+
+    public function get_user_password($user){
+        if(!$user){
+            throw new Exception("Неверный логин или пароль");
+        }
+        $sql = "SELECT user.id, name, password FROM user LEFT JOIN usernames ON usernames.user_id = user.id WHERE usernames.title = :user1 OR user.mail = :user2";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':user1', $user);
+        $stmt->bindParam(':user2', $user);
+        $stmt->execute();
+        $password = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if(empty($password)){
+            throw new Exception("Неверный логин или пароль");
+        }
+        return $password;
+    }
+
 }

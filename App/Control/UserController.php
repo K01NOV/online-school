@@ -1,6 +1,7 @@
 <?php namespace App\Control;
 
 use App\Model\UserEntity;
+use Exception;
 use PDO;
 use App\Model\UserModel;
 
@@ -26,31 +27,46 @@ class UserController{
                 );
 
                 if($this->userModel->check_email_existance($this->userEntity->email)){
-                    throw new \Exception("Этот email уже занят: " . $this->userEntity->email);
+                    throw new Exception("Этот email уже занят: " . $this->userEntity->email);
                 }
-                $_SESSION['name'] = $this->userEntity->name;
                 if (!$this->userModel->createUser($this->userEntity)) {
-                    throw new \Exception("Не удалось создать профиль, попробуйте еще раз");
+                    throw new Exception("Не удалось создать профиль, попробуйте еще раз");
                 }
+                //$info = $this->userModel->get_user_password($_POST['email']);
+                $_SESSION['name'] = $this->userEntity->name;
+                //$_SESSION['id'] = $info['id'];
+                //$info = null;
                 header("Location: /profile");
                 exit();
 
-            } catch(\Exception $e){
+            } catch(Exception $e){
                 $_SESSION['error'] = $e->getMessage();
                 header("Location: /registration");
                 exit();
             }
-
-
-            //
-            //if($this->userModel->createUser($name, $email, $type, $password, $nick)){
-            //    header("Location: /profile");
-            //    exit();
-            //}
-            //header("Location: /error");
-            //exit();
         }
     }
+
+    function login(){
+        if($_SERVER['REQUEST_METHOD'] ==='POST'){
+            try{
+                $info = $this->userModel->get_user_password($_POST['login']);
+                if($info && password_verify($_POST['password'], $info['password'])){
+                    $_SESSION['name'] = $info['name'];
+                    $_SESSION['id'] = $info['id'];
+                    $info = null;
+                    header("Location: /profile");
+                    exit();
+                }
+                throw new Exception("Неверный логин или пароль");
+            } catch(Exception $e){
+                $_SESSION['error'] = $e->getMessage();
+                header("Location: /registration");
+                exit();
+            }
+        }
+    }
+    
     function userRoom(){
         $name = $_SESSION['name'] ?? 'Guest'; 
         require_once __DIR__ . '/../../View/userRoom.php';

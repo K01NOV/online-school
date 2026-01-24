@@ -26,7 +26,7 @@
     </form>
     <form action="/login" method="POST">
         <h3>Authorization</h3>
-        <input type="email" placeholder="email" name="email">
+        <input type="email or nickname" placeholder="email" name="login">
         <input type="password" placeholder="password" name="password">
         <input type="submit">
     </form>
