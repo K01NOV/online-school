@@ -1,0 +1,67 @@
+.reg-auth-container{
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    padding-top: 200px;
+    gap: 100px;
+}
+
+.reg-auth-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+/*-----------------------mini-profile-------------------------*/
+
+.mini-profile{
+    width: fit-content;
+    max-width: 300px;
+    min-width: 100px;
+    height: fit-content;
+    max-height: 100px;
+    min-height: 40px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0px 4px 20px 5px rgba(34, 60, 80, 0.2);
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 20px;
+}
+
+.mini-profile-avatar{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.mini-profile-info{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mini-profile-logout{
+    background-color: dodgerblue;
+    color: white;
+    margin-left: 10px;
+    border-radius: 15px;
+    border: none;
+    padding: 5px 10px;
+}
+
+.mini-profile-info > p{
+    margin: 0px;
+}
+
+.mini-profile-logout:hover{
+    cursor: pointer;
+}
+
+.mini-profile-nickname{
+    color: dodgerblue;
+    text-decoration: underline;
+}

@@ -93,11 +93,11 @@ class UserModel{
         return $nick . "#" . str_pad($nextTag, 4, "0", STR_PAD_LEFT);
     }
 
-    public function get_user_password($user){
+    public function get_user_data($user){
         if(!$user){
             throw new Exception("Неверный логин или пароль");
         }
-        $sql = "SELECT user.id, name, password FROM user LEFT JOIN usernames ON usernames.user_id = user.id WHERE usernames.title = :user1 OR user.mail = :user2";
+        $sql = "SELECT user.id, name, password, usernames.title AS nickname, user.mail, user.type FROM user LEFT JOIN usernames ON usernames.user_id = user.id WHERE usernames.title = :user1 OR user.mail = :user2";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':user1', $user);
         $stmt->bindParam(':user2', $user);
@@ -107,6 +107,7 @@ class UserModel{
         if(empty($password)){
             throw new Exception("Неверный логин или пароль");
         }
+
         return $password;
     }
 
