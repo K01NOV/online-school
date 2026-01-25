@@ -16,13 +16,13 @@ class PagesController{
 
     function showProfile(){
         require_once __DIR__ . "/../../View/head.php";
-        require_once __DIR__ . "/../../View/userRoom.php";
+        require_once __DIR__ . "/../../View/dashboard.php";
         require_once __DIR__ . "/../../View/footer.php";
     }
-    function userRoom(){
-        $name = $_SESSION['name'] ?? 'Guest'; 
+    function showDashboard(){
+        $name = $_SESSION['name']; 
         require_once __DIR__ . "/../../View/head.php";
-        require_once __DIR__ . '/../../View/userRoom.php';
+        require_once __DIR__ . '/../../View/dashboard.php';
         require_once __DIR__ . "/../../View/footer.php";
     }
 }

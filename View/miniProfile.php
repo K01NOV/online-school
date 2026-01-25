@@ -1,4 +1,3 @@
-<?php if(!isset($_SESSION['name'])){header("Location: /registration"); exit(); } ?>
 <div class="mini-profile">
     <img class="mini-profile-avatar" src="assets/avatar3.png" alt="">
     <div class="mini-profile-info">

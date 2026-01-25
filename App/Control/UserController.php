@@ -32,11 +32,16 @@ class UserController{
                 if (!$this->userModel->createUser($this->userEntity)) {
                     throw new Exception("Не удалось создать профиль, попробуйте еще раз");
                 }
-                //$info = $this->userModel->get_user_password($_POST['email']);
-                $_SESSION['name'] = $this->userEntity->name;
-                //$_SESSION['id'] = $info['id'];
-                //$info = null;
-                header("Location: /profile");
+                $info = $this->userModel->get_user_data($_POST['email']);
+                $_SESSION['name'] = $info['name'];
+                $_SESSION['id'] = $info['id'];
+                $_SESSION['email'] = $info['mail'];
+                $_SESSION['type'] = $info['type'];
+                if(!empty($info['nickname'])){
+                    $_SESSION['nickname'] = $info['nickname'];
+                }
+                $info = null;
+                header("Location: /dashboard");
                 exit();
 
             } catch(Exception $e){
@@ -54,14 +59,16 @@ class UserController{
                 if($info && password_verify($_POST['password'], $info['password'])){
                     $_SESSION['name'] = $info['name'];
                     $_SESSION['id'] = $info['id'];
-                    $_SESSION['nickname'] = $info['nickname'];
                     $_SESSION['email'] = $info['mail'];
                     $_SESSION['type'] = $info['type'];
+                    if(!empty($info['nickname'])){
+                        $_SESSION['nickname'] = $info['nickname'];
+                    }
                     $info = null;
-                    header("Location: /profile");
+                    header("Location: /dashboard");
                     exit();
                 }
-                throw new Exception("Неверный логин или пароль");
+                throw new Exception("Неверный логин или пароль (хз короч)");
             } catch(Exception $e){
                 $_SESSION['error'] = $e->getMessage();
                 header("Location: /registration");

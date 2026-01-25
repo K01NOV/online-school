@@ -95,20 +95,20 @@ class UserModel{
 
     public function get_user_data($user){
         if(!$user){
-            throw new Exception("Неверный логин или пароль");
+            throw new Exception("Неверный логин или пароль (нет данных)");
         }
         $sql = "SELECT user.id, name, password, usernames.title AS nickname, user.mail, user.type FROM user LEFT JOIN usernames ON usernames.user_id = user.id WHERE usernames.title = :user1 OR user.mail = :user2";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':user1', $user);
         $stmt->bindParam(':user2', $user);
         $stmt->execute();
-        $password = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if(empty($password)){
-            throw new Exception("Неверный логин или пароль");
+        if(empty($userData)){
+            throw new Exception("Неверный логин или пароль (нет пароля)");
         }
 
-        return $password;
+        return $userData;
     }
 
 }

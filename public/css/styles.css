@@ -59,6 +59,7 @@
 
 .mini-profile-logout:hover{
     cursor: pointer;
+    background-color: rgb(30, 109, 255);
 }
 
 .mini-profile-nickname{
