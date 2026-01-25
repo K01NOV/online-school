@@ -15,7 +15,8 @@ class Router{
         'registration' => [PagesController::class, 'showRegistration'],
         'register' => [UserController::class, 'createUser'],
         'profile' => [PagesController::class, 'userRoom'],
-        'login' => [UserController::class, 'login']
+        'login' => [UserController::class, 'login'],
+        'logout' => [UserController::class, 'logout']
     ];
 
     function __construct(){
