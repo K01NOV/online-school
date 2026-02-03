@@ -1,6 +1,6 @@
 <?php namespace App\Control;
 
-use App\Model\UserEntity;
+use App\Entity\UserEntity;
 use Exception;
 use PDO;
 use App\Model\UserModel;

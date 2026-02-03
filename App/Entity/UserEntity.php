@@ -1,4 +1,4 @@
-<?php namespace App\Model;
+<?php namespace App\Entity;
 
 class UserEntity{
     public $name;
@@ -20,11 +20,12 @@ class UserEntity{
         if(mb_strlen($name) < 2){
             throw new \Exception("Имя слишком корокое: " . $name);
         }
-        $pattern = '/[^\p{L}\s]/u'; 
+        $pattern = '/[^\p{L}\s]/u';
         if(preg_match($pattern, $name)){
             throw new \Exception("Имя не может содержать цифры или спец. символы: " . $name);
         }
-        return mb_strimwidth($name, 0, 30);
+
+        return mb_strimwidth($name, 0, 70);
     }
 
     public function password_validation($password){

@@ -1,68 +1,203 @@
-.reg-auth-container{
+/* ==========================================================================
+   1. БАЗОВЫЕ СТИЛИ (Глобальные настройки)
+   ========================================================================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 30px 5%;
+    background-color: #f9f9f9;
+    color: #4a4a4a;
+    margin: 0;
+}
+
+h2 { margin: 0; font-size: 1.1rem; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; }
+
+/* ==========================================================================
+   2. ШАПКА И ПАНЕЛЬ УПРАВЛЕНИЯ (Main Dashboard)
+   ========================================================================== */
+.main-dashboard {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+/* Блок профиля слева */
+.dashboard-sidebar {
+    max-width: 250px;
+    min-width: 100px;
+    width: fit-content;
+    flex-shrink: 0;
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0px 4px 20px 5px rgba(34, 60, 80, 0.1);
+    padding: 25px;
+}
+
+/* Контейнер для поиска и кнопок справа */
+.dashboard-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Поиск */
+.search-form {
+    display: flex;
+    height: 60px;
+    background: white;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+    padding-left: 20px;
+}
+
+.search-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #666;
+}
+
+.search-button {
+    background: #ff9100;
+    border: none;
+    color: white;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.search-button:hover { background: #e68200; }
+
+.search-icon { width: 20px; height: auto; filter: brightness(0) invert(1); }
+
+/* Ряды кнопок (Навигация и Классы) */
+.navigation-row, .classes-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.nav-btn, .class-pill {
+    background: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.nav-btn:hover, .class-pill:hover {
+    background: dodgerblue;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   3. МИНИ-ПРОФИЛЬ (Внутри Sidebar)
+   ========================================================================== */
+.mini-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.mini-profile-avatar {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #f0f0f0;
+}
+
+.mini-profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mini-profile-name { font-size: 1.1rem; font-weight: 600; color: #333; margin: 0px;}
+.mini-profile-nickname { color: dodgerblue; font-size: 0.9rem; margin: 0px;}
+
+.mini-profile-logout {
+    background-color: #ff4b4b;
+    color: white;
+    border-radius: 20px;
+    border: none;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
+
+.mini-profile-logout:hover { background-color: #d43f3f; transform: scale(1.05); }
+
+/* ==========================================================================
+   4. СЕТКА ПРЕДМЕТОВ (Контент)
+   ========================================================================== */
+.subjects-grid {
+    display: grid;
+    /* auto-fill создает столько колонок, сколько влезет */
+    /* minmax(220px, 280px) говорит: карточка не меньше 220px и не больше 280px */
+    width: 100%;
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.subject-card {
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    gap: 15px;
+    transition: 0.3s;
+    /* Убираем возможность растягиваться сверх меры */
+    max-width: 280px; 
+    box-sizing: border-box;
+}
+
+.subject-card img {
+    width: 100%; /* Картинка подстраивается под ширину карточки */
+    max-width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.subject-card:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* ==========================================================================
+   5. СТРАНИЦА РЕГИСТРАЦИИ / АВТОРИЗАЦИИ
+   ========================================================================== */
+.reg-auth-container {
     display: flex;
     justify-content: center;
     align-items: baseline;
-    padding-top: 200px;
+    padding-top: 15vh; /* Используем vh для центровки по высоте */
     gap: 100px;
 }
 
-.reg-auth-form{
+.reg-auth-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
     text-align: center;
-}
-
-/*-----------------------mini-profile-------------------------*/
-
-.mini-profile{
-    width: fit-content;
-    max-width: 300px;
-    min-width: 100px;
-    height: fit-content;
-    max-height: 100px;
-    min-height: 40px;
-    background-color: white;
-    border-radius: 30px;
-    box-shadow: 0px 4px 20px 5px rgba(34, 60, 80, 0.2);
-    display: flex;
-    align-items: flex-start;
-    padding: 20px;
-    gap: 20px;
-}
-
-.mini-profile-avatar{
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-.mini-profile-info{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.mini-profile-logout{
-    background-color: dodgerblue;
-    color: white;
-    margin-left: 10px;
-    border-radius: 15px;
-    border: none;
-    padding: 5px 10px;
-}
-
-.mini-profile-info > p{
-    margin: 0px;
-}
-
-.mini-profile-logout:hover{
-    cursor: pointer;
-    background-color: rgb(30, 109, 255);
-}
-
-.mini-profile-nickname{
-    color: dodgerblue;
-    text-decoration: underline;
 }
