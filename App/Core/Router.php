@@ -2,6 +2,7 @@
 
 use App\Control\UserController;
 use App\Control\PagesController;
+use App\Control\SubjectController;
 
 use PDO;
 use PDOException;
@@ -14,7 +15,7 @@ class Router{
         'home' => [PagesController::class, 'showHome'],
         'registration' => [PagesController::class, 'showRegistration'],
         'register' => [UserController::class, 'createUser'],
-        'dashboard' => [PagesController::class, 'showDashboard'],
+        'dashboard' => [SubjectController::class, 'display_subjects'],
         'login' => [UserController::class, 'login'],
         'logout' => [UserController::class, 'logout']
     ];

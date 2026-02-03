@@ -166,14 +166,14 @@ button { cursor: pointer; }
     gap: 15px;
     transition: 0.3s;
     /* Убираем возможность растягиваться сверх меры */
-    max-width: 280px; 
+    max-width: 300px; 
     box-sizing: border-box;
 }
 
 .subject-card img {
     width: 100%; /* Картинка подстраивается под ширину карточки */
-    max-width: 180px;
-    height: 180px;
+    max-width: 210px;
+    height: 210px;
     object-fit: cover;
     border-radius: 15px;
 }

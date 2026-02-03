@@ -30,11 +30,13 @@
     </main>
 </header>
 
-<section class="subjects-grid">
-    <?php for($i=0; $i<8; $i++): ?>
-    <a href="#" class="subject-card">
-        <img src="assets\avatar2.png" alt="Математика"> 
-        <h2>Математика</h2>
-    </a>
-    <?php endfor; ?>
-</section>
+<?php if(isset($subjects)):?>
+    <section class="subjects-grid">
+        <?php foreach($subjects as $subject): ?>
+            <a href="#" class="subject-card">
+                <img src="<?= htmlspecialchars($subject->image) ?>" alt="<?= htmlspecialchars($subject->image) ?>" referrerpolicy="no-referrer"> 
+                <h2><?php echo htmlspecialchars($subject->name) ?></h2>
+            </a>
+        <?php endforeach; ?>
+    </section>
+<?php endif?>
