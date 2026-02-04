@@ -14,7 +14,7 @@ class SubjectModel{
     }
 
     function get_all(){
-        $sql = "SELECT * FROM subjects";
+        $sql = "SELECT * FROM subjects ORDER BY subjects.title";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -44,7 +44,7 @@ class SubjectModel{
         FROM subjects
         INNER JOIN `subject-class` ON subjects.id = `subject-class`.subject_id
         INNER JOIN classes ON `subject-class`.grouped_class_id = classes.id 
-        WHERE classes.id = :class";
+        WHERE classes.id = :class ORDER BY subjects.title";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(":class", $class, PDO::PARAM_INT);
@@ -73,7 +73,7 @@ class SubjectModel{
         FROM subjects 
         INNER JOIN `subject-class` ON subjects.id = `subject-class`.subject_id 
         INNER JOIN more_classes ON `subject-class`.class_id = more_classes.id 
-        WHERE more_classes.id = :class";
+        WHERE more_classes.id = :class ORDER BY subjects.title";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(":class", $class, PDO::PARAM_INT);
@@ -89,6 +89,25 @@ class SubjectModel{
             );
         }
         return $subjects;
+    }
+
+    public function get_grades($class){
+        $classes = [12, 13, 14];
+        if(!in_array($class, $classes)){
+            throw new Exception("Не удалось найти подходящие классы");
+        }
+
+        $sql = "SELECT id, title FROM more_classes WHERE grouped_class_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(":id", $class, PDO::PARAM_INT);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $classes = [];
+
+        foreach($rows as $row){
+            $classes[$row['id']] = $row['title'];
+        }
+        return $classes;
     }
 
     public function getDirectLink(string $publicUrl): string {

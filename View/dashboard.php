@@ -23,10 +23,19 @@
         </nav>
 
         <nav class="classes-row">
-            <a href="#" class="class-pill">1-4 класс</a>
-            <a href="#" class="class-pill">5-9 класс</a>
-            <a href="#" class="class-pill">10-11 класс</a>
+            <a href="/dashboard" class="class-pill">Все</a>
+            <a href="/dashboard?class=12" class="class-pill">1-4 класс</a>
+            <a href="/dashboard?class=13" class="class-pill">5-9 класс</a>
+            <a href="/dashboard?class=14" class="class-pill">10-11 класс</a>
         </nav>
+
+        <?php if(isset($grades)): ?>
+            <nav class="classes-row">
+                <?php foreach($grades as $id => $title): ?>
+                    <a href="/dashboard?class=<?= htmlspecialchars($_GET['class'])?>&grade=<?= htmlspecialchars($id) ?>" class="class-pill <?= (isset($_GET['grade']) && $_GET['grade'] == $id) ? 'active' : '' ?>"><?= htmlspecialchars($title) ?></a>
+                <?php endforeach?>
+            </nav>
+        <?php endif?>
     </main>
 </header>
 

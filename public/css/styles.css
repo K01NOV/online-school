@@ -103,6 +103,17 @@ button { cursor: pointer; }
     transform: translateY(-2px);
 }
 
+.nav-btn.active, .class-pill.active {
+    background: #FF9100;
+    color: white;
+}
+
+.nav-btn.active:hover, .class-pill.active:hover {
+    background: #d46905;
+    color: white;
+    transform: translateY(-2px);
+}
+
 /* ==========================================================================
    3. МИНИ-ПРОФИЛЬ (Внутри Sidebar)
    ========================================================================== */
