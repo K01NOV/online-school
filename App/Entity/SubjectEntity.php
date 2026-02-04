@@ -11,7 +11,4 @@ class SubjectEntity{
         $this->image = $image;
     }
 
-    public function get_image_path(){
-        return "https://getfile.dokpub.com/yandex/get/" . $this->image;
-    }
 }

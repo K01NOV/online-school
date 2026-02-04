@@ -13,7 +13,6 @@
                 <img src="assets/search_icon.svg" class="search-icon">
             </button>
         </form>
-
         <nav class="navigation-row">
             <a href="#" class="nav-btn"><h2>Задания</h2></a>
             <a href="#" class="nav-btn"><h2>Тесты</h2></a>
@@ -21,14 +20,12 @@
             <a href="#" class="nav-btn"><h2>Видеотека</h2></a>
             <a href="#" class="nav-btn nav-btn--special"><h2>Проверить сочинение</h2></a>
         </nav>
-
         <nav class="classes-row">
             <a href="/dashboard" class="class-pill">Все</a>
             <a href="/dashboard?class=12" class="class-pill">1-4 класс</a>
             <a href="/dashboard?class=13" class="class-pill">5-9 класс</a>
             <a href="/dashboard?class=14" class="class-pill">10-11 класс</a>
         </nav>
-
         <?php if(isset($grades)): ?>
             <nav class="classes-row">
                 <?php foreach($grades as $id => $title): ?>
@@ -42,7 +39,7 @@
 <?php if(isset($subjects)):?>
     <section class="subjects-grid">
         <?php foreach($subjects as $subject): ?>
-            <a href="#" class="subject-card">
+            <a href="/subject-info?id=<?= htmlspecialchars($subject->id); ?>" class="subject-card">
                 <img src="<?= htmlspecialchars($subject->image) ?>" alt="<?= htmlspecialchars($subject->image) ?>" referrerpolicy="no-referrer"> 
                 <h2><?php echo htmlspecialchars($subject->name) ?></h2>
             </a>

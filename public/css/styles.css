@@ -214,3 +214,204 @@ button { cursor: pointer; }
     gap: 10px;
     text-align: center;
 }
+
+/* ==========================================================================
+   6. СТРАНИЦА ПРЕДМЕТА И ТЕМ
+   ========================================================================== */
+
+.subject-container {
+    padding: 40px;
+    /* Градиент от твоего оранжевого к прозрачному белому */
+    background: linear-gradient(135deg, #005F73 0%, #94D2BD 80%);
+    height: fit-content;
+    color: #333; /* Текст теперь темный, так как фон светлый */
+    font-family: 'Inter', sans-serif;
+    border-radius: 54px;
+}
+
+.subject-header-hero {
+    display: flex;
+    align-items: center; 
+    gap: 40px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.5); /* Эффект матового стекла */
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.subject-cover img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(255, 145, 0, 0.2); /* Тень в цвет бренда */
+}
+
+.badge {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.subject-title {
+    font-size: 56px;
+    font-weight: 800;
+    color: #001219; /* Из твоей палитры (очень темный сине-зеленый) */
+    margin-bottom: 10px;
+}
+
+.subject-description {
+    font-size: 18px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.subject-stats {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Стили для счетчиков из доп. палитры */
+.stat-item {
+    background: #e9d8a6; /* Песочный из твоей палитры */
+    padding: 10px 20px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.stat-value {
+    font-weight: 900;
+    color: #EE9B00;
+}
+
+.stat-label {
+    color: #EE9B00;
+    font-size: 14px;
+}
+
+/* Стили для заглушки */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   7. ТЕМЫ И УРОКИ 
+   ========================================================================== */
+
+.learning-path {
+    margin-top: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+}
+
+.path-title {
+    margin-bottom: 25px;
+    color: #005F73;
+    font-size: 28px;
+    padding-left: 20px;
+}
+
+.topic-item {
+    margin-bottom: 15px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.topic-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: #f8f9fa;
+    cursor: pointer;
+    gap: 15px;
+    transition: background 0.3s;
+}
+
+.topic-header:hover { background: #e9ecef; }
+
+.topic-marker {
+    width: 8px;
+    height: 40px;
+    background: #005F73;
+    border-radius: 4px;
+}
+
+.topic-name {
+    flex-grow: 1;
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.topic-status {
+    font-size: 14px;
+    color: #666;
+    background: #94D2BD;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+/* --- МАГИЯ АНИМАЦИИ ТУТ --- */
+.lessons-list {
+    display: grid;
+    grid-template-rows: 0fr; /* Изначально схлопнуто */
+    transition: grid-template-rows 0.4s ease-in-out, padding 0.4s ease-in-out;
+    padding: 0 0 0 50px; 
+    overflow: hidden;
+    background: #fff;
+}
+
+.topic-item.open .lessons-list {
+    grid-template-rows: 1fr; /* Плавно раскрываем */
+    padding: 10px 0 10px 50px;
+}
+
+.lessons-list-inner {
+    min-height: 0; /* Обязательно для анимации grid-rows */
+}
+/* ------------------------- */
+
+.lesson-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #444;
+    border-radius: 15px;
+    transition: background 0.2s;
+}
+
+.lesson-link:hover { background: rgba(255, 145, 0, 0.1); }
+
+.lesson-marker-orange {
+    width: 5px;
+    height: 20px;
+    background: #FF9100;
+    border-radius: 3px;
+}
+
+.topic-header::after {
+    content: '▼';
+    font-size: 12px;
+    color: #005F73;
+    transition: transform 0.3s;
+    margin-left: auto;
+}
+
+.topic-item.open .topic-header::after { transform: rotate(180deg); }

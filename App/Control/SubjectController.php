@@ -28,10 +28,7 @@ class SubjectController{
         $grades = $this->display_grades() ?? $_SESSION['grades'] ?? null;
         
         foreach ($subjects as $subject) {
-            if(!isset($_SESSION['image_url'][$subject->id])){
-                $_SESSION['image_url'][$subject->id] = $this->subjectModel->getDirectLink($subject->image);
-            }
-            $subject->image = $_SESSION['image_url'][$subject->id];
+            $subject->image = $this->refresh_link($subject);
         }
         
         require_once __DIR__ . "/../../View/head.php";
@@ -54,5 +51,34 @@ class SubjectController{
         }
         
         return $_SESSION['grades'] ?? null;
+    }
+
+    public function subject_info(){
+        if(isset($_GET['id'])){
+            $subject = $this->subjectModel->get_subject((int)$_GET['id']);
+            $subject = new SubjectEntity($subject['id'], $subject['title'], $subject['image_url']);
+            $subject->image = $this->refresh_link($subject);
+            
+            require_once __DIR__ . "/../../View/head.php";
+            require_once __DIR__ . "/../../View/subject_info.php";
+            require_once __DIR__ . "/../../View/footer.php";
+        }
+        else{
+            header("Location: /dashboard");
+        }
+    }
+
+    public function refresh_link($subject){
+        $now = time();
+        $expire_time = 3600 * 10;
+
+        if (!isset($_SESSION['image_url'][$subject->id]) || 
+        !isset($_SESSION['image_time'][$subject->id]) || 
+        ($now - $_SESSION['image_time'][$subject->id]) > $expire_time) {
+            $_SESSION['image_url'][$subject->id] = $this->subjectModel->getDirectLink($subject->image);
+            $_SESSION['image_time'][$subject->id] = $now;
+        }
+
+        return $_SESSION['image_url'][$subject->id];
     }
 }

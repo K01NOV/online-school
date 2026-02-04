@@ -110,6 +110,15 @@ class SubjectModel{
         return $classes;
     }
 
+    public function get_subject(int $id){
+        $sql = "SELECT * FROM subjects WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $subject = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $subject;
+    }
+
     public function getDirectLink(string $publicUrl): string {
         $token = $this->yandexConfig['yandex']['token'];
         
@@ -118,7 +127,7 @@ class SubjectModel{
         $ch = curl_init($apiUri);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: OAuth ' . $token]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // На локалке ок, на хостинге включим
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // На локалке ок на хостинге включить
 
         $response = curl_exec($ch);
         $data = json_decode($response, true);

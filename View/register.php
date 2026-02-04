@@ -25,4 +25,3 @@
 </div>
 
 
-<script src="js/nickname.js"></script>

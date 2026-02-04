@@ -17,7 +17,8 @@ class Router{
         'register' => [UserController::class, 'createUser'],
         'dashboard' => [SubjectController::class, 'display_subjects'],
         'login' => [UserController::class, 'login'],
-        'logout' => [UserController::class, 'logout']
+        'logout' => [UserController::class, 'logout'],
+        'subject-info' => [SubjectController::class, 'subject_info']
     ];
 
     function __construct(){

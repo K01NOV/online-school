@@ -19,10 +19,9 @@ class PagesController{
         require_once __DIR__ . "/../../View/dashboard.php";
         require_once __DIR__ . "/../../View/footer.php";
     }
-    function showDashboard(){
-        $name = $_SESSION['name']; 
+    function showSubjectInfo(){
         require_once __DIR__ . "/../../View/head.php";
-        require_once __DIR__ . '/../../View/dashboard.php';
+        require_once __DIR__ . '/../../View/subject_info.php';
         require_once __DIR__ . "/../../View/footer.php";
     }
 }
