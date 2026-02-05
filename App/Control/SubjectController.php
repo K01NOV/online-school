@@ -5,16 +5,19 @@ use Exception;
 use PDO;
 use App\Model\SubjectModel;
 use App\Model\TopicModel;
+use App\Model\LessonModel;
 
 class SubjectController{
     private $conn;
     private $subjectModel;
     private $topicModel;
+    private $lessonModel;
 
     function __construct(PDO $db){
         $this->conn = $db;
         $this->subjectModel = new SubjectModel($this->conn);
         $this->topicModel = new TopicModel($this->conn);
+        $this->lessonModel = new LessonModel($this->conn);
     }
 
     public function display_subjects(){
@@ -60,7 +63,19 @@ class SubjectController{
         if(isset($_GET['id'])){
             $subject = $this->subjectModel->get_subject((int)$_GET['id']);
             $subject->image = $this->refresh_link($subject);
-            $topics = $this->topicModel->get_topics($subject->id);
+            if(isset($_GET['grade'])){
+                $topics = $this->topicModel->sort_detailed((int)$_GET['grade'], $subject->id);
+            }
+            else if(isset($_GET['class'])){
+                $topics = $this->topicModel->sort_wide((int)$_GET['class'], $subject->id);
+            }
+            else{
+                $topics = $this->topicModel->get_all($subject->id);
+            }
+            foreach($topics as $topic){
+                $topic->lessons = $this->lessonModel->get_lessons($topic->id);
+            }
+            $grades = $this->display_grades() ?? $_SESSION['grades'] ?? null;
             
             require_once __DIR__ . "/../../View/head.php";
             require_once __DIR__ . "/../../View/subject_info.php";
@@ -73,7 +88,7 @@ class SubjectController{
 
     public function refresh_link($subject){
         $now = time();
-        $expire_time = 3600 * 10;
+        $expire_time = 3600 * 4;
 
         if (!isset($_SESSION['image_url'][$subject->id]) || 
         !isset($_SESSION['image_time'][$subject->id]) || 

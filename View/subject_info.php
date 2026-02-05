@@ -21,15 +21,15 @@
             <a href="#" class="nav-btn nav-btn--special"><h2>Проверить сочинение</h2></a>
         </nav>
         <nav class="classes-row">
-            <a href="#" class="class-pill">Все</a>
-            <a href="#" class="class-pill">1-4 класс</a>
-            <a href="#" class="class-pill">5-9 класс</a>
-            <a href="#" class="class-pill">10-11 класс</a>
+            <a href="subject-info?id=<?= htmlspecialchars($_GET['id'])?>" class="class-pill">Все</a>
+            <a href="subject-info?id=<?= htmlspecialchars($_GET['id'])?>&class=12" class="class-pill">1-4 класс</a>
+            <a href="subject-info?id=<?= htmlspecialchars($_GET['id'])?>&class=13" class="class-pill">5-9 класс</a>
+            <a href="subject-info?id=<?= htmlspecialchars($_GET['id'])?>&class=14" class="class-pill">10-11 класс</a>
         </nav>
         <?php if(isset($grades)): ?>
             <nav class="classes-row">
                 <?php foreach($grades as $id => $title): ?>
-                    <a href="#" class="class-pill <?= (isset($_GET['grade']) && $_GET['grade'] == $id) ? 'active' : '' ?>"><?= htmlspecialchars($title) ?></a>
+                    <a href="subject-info?id=<?= htmlspecialchars($_GET['id'])?>&class=<?= htmlspecialchars($_GET['class'])?>&grade=<?= htmlspecialchars($id)?>" class="class-pill <?= (isset($_GET['grade']) && $_GET['grade'] == $id) ? 'active' : '' ?>"><?= htmlspecialchars($title) ?></a>
                 <?php endforeach?>
             </nav>
         <?php endif?>
@@ -76,20 +76,20 @@
                             <div class="topic-header" onclick="toggleTopic(this)">
                                 <div class="topic-marker"></div>
                                 <h3 class="topic-name"><?= htmlspecialchars($topic->name) ?></h3>
-                                <span class="topic-status">4 урока</span>
+                                <span class="topic-status"><?= htmlspecialchars($topic->write_lessons_amount())?></span>
                             </div>
-                            
+                        <?php if(!empty($topic->lessons)): ?>
                             <div class="lessons-list">
-                                <div class="lessons-list-inner"> <a href="#" class="lesson-link">
-                                        <div class="lesson-marker-orange"></div>
-                                        <span>Мир глазами астронома</span>
-                                    </a>
-                                    <a href="#" class="lesson-link">
-                                        <div class="lesson-marker-orange"></div>
-                                        <span>Планета на бумаге</span>
-                                    </a>
+                                <div class="lessons-list-inner"> 
+                                    <?php foreach($topic->lessons as $lesson): ?>
+                                        <a href="#" class="lesson-link">
+                                            <div class="lesson-marker-orange"></div>
+                                            <span><?= htmlspecialchars($lesson->name)?></span>
+                                        </a>
+                                    <?php endforeach?>
                                 </div>
                             </div>
+                        <?php endif?>
                         </div>
                     <?php endforeach ?>
                 </div>
@@ -97,9 +97,7 @@
         </div>
     <?php else: ?>
         <div class="empty-state">
-            <div class="empty-icon">📂</div>
-            <h3>Контент в разработке</h3>
-            <p>Мы еще готовим материалы по этому предмету. Загляните позже!</p>
+            <?php require_once __DIR__ . "/placeholder.php" ?>
         </div>
     <?php endif; ?>
 </main>
