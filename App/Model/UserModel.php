@@ -5,11 +5,11 @@ use PDO;
 
 class UserModel{
     private $conn;
-    function __construct(PDO $db){
+    public function __construct(PDO $db){
         $this->conn = $db;
     }
 
-    function createUser($user){
+    public function createUser($user){
         try{
             $this->conn->beginTransaction();
             $hash = password_hash($user->password, PASSWORD_DEFAULT);
@@ -55,7 +55,7 @@ class UserModel{
         }
     }
 
-    function check_email_existance($email){
+    public function check_email_existance($email){
         $stmt = $this->conn->prepare("SELECT * FROM user WHERE mail = :email");
         $stmt->bindValue(":email", $email);
         $stmt->execute();

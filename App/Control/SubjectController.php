@@ -4,14 +4,17 @@ use App\Entity\SubjectEntity;
 use Exception;
 use PDO;
 use App\Model\SubjectModel;
+use App\Model\TopicModel;
 
 class SubjectController{
     private $conn;
     private $subjectModel;
+    private $topicModel;
 
     function __construct(PDO $db){
         $this->conn = $db;
         $this->subjectModel = new SubjectModel($this->conn);
+        $this->topicModel = new TopicModel($this->conn);
     }
 
     public function display_subjects(){
@@ -56,8 +59,8 @@ class SubjectController{
     public function subject_info(){
         if(isset($_GET['id'])){
             $subject = $this->subjectModel->get_subject((int)$_GET['id']);
-            $subject = new SubjectEntity($subject['id'], $subject['title'], $subject['image_url']);
             $subject->image = $this->refresh_link($subject);
+            $topics = $this->topicModel->get_topics($subject->id);
             
             require_once __DIR__ . "/../../View/head.php";
             require_once __DIR__ . "/../../View/subject_info.php";

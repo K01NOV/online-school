@@ -115,7 +115,12 @@ class SubjectModel{
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
-        $subject = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $subject = new SubjectEntity(
+            $row['id'],
+            $row['title'],
+            $row['image_url']
+        );
         return $subject;
     }
 

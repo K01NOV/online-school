@@ -66,50 +66,32 @@
 </div>
 
 <main class="topics-section">    
-    <?php if($subject->id == 6): ?>
+    <?php if(isset($topics) && !empty($topics)): ?>
         <div class="topics-grid">
             <section class="learning-path">
                 <h2 class="path-title">Программа обучения</h2>
                 <div class="accordion">
-                    <div class="topic-item">
-                        <div class="topic-header" onclick="toggleTopic(this)">
-                            <div class="topic-marker"></div>
-                            <h3 class="topic-name">Земля и человечество</h3>
-                            <span class="topic-status">4 урока</span>
-                        </div>
-                        
-                        <div class="lessons-list">
-                            <div class="lessons-list-inner"> <a href="#" class="lesson-link">
-                                    <div class="lesson-marker-orange"></div>
-                                    <span>Мир глазами астронома</span>
-                                </a>
-                                <a href="#" class="lesson-link">
-                                    <div class="lesson-marker-orange"></div>
-                                    <span>Планета на бумаге</span>
-                                </a>
+                    <?php foreach($topics as $topic):?>
+                        <div class="topic-item">
+                            <div class="topic-header" onclick="toggleTopic(this)">
+                                <div class="topic-marker"></div>
+                                <h3 class="topic-name"><?= htmlspecialchars($topic->name) ?></h3>
+                                <span class="topic-status">4 урока</span>
+                            </div>
+                            
+                            <div class="lessons-list">
+                                <div class="lessons-list-inner"> <a href="#" class="lesson-link">
+                                        <div class="lesson-marker-orange"></div>
+                                        <span>Мир глазами астронома</span>
+                                    </a>
+                                    <a href="#" class="lesson-link">
+                                        <div class="lesson-marker-orange"></div>
+                                        <span>Планета на бумаге</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="topic-item">
-                        <div class="topic-header" onclick="toggleTopic(this)">
-                            <div class="topic-marker"></div>
-                            <h3 class="topic-name">Земля и человечество</h3>
-                            <span class="topic-status">4 урока</span>
-                        </div>
-                        
-                        <div class="lessons-list">
-                            <div class="lessons-list-inner"> <a href="#" class="lesson-link">
-                                    <div class="lesson-marker-orange"></div>
-                                    <span>Мир глазами астронома</span>
-                                </a>
-                                <a href="#" class="lesson-link">
-                                    <div class="lesson-marker-orange"></div>
-                                    <span>Планета на бумаге</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach ?>
                 </div>
             </section>
         </div>
