@@ -29,11 +29,27 @@ class TopicModel{
         return $topics;
     }
 
-    public function sort_wide(int $class, int $subject){
-        $classes = [12, 13, 14];
+    public function sort_wide($class, int $subject){
+        $classes = ['1-4', '5-9', '10-11'];
         if(!in_array($class, $classes)){
             return [];
         }
+
+        switch($class){
+            case '1-4':
+                $class = 12;
+                break;
+            case '5-9':
+                $class = 13;
+                break;
+            case '10-11':
+                $class = 14;
+                break;
+            default:
+                $class = 12;
+                break;
+        }
+
         $sql = "SELECT DISTINCT
             topics.id AS topic_id, 
             topics.subject_id,
@@ -62,7 +78,7 @@ class TopicModel{
         return $topics;
     }
 
-    public function sort_detailed(int $class, int $subject){
+    public function sort_detailed($class, int $subject){
         if($class > 11 || $class < 1){
             return [];
         }

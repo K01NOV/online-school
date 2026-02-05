@@ -510,7 +510,6 @@ button { cursor: pointer; }
     position: relative;
     padding-bottom: 56.25%;
     height: 0;
-    border-radius: 25px;
     overflow: hidden;
     background: #000;
     box-shadow: 0 15px 35px rgba(0,0,0,0.1);
@@ -558,11 +557,16 @@ button { cursor: pointer; }
     padding: 30px;
     border-radius: 30px;
     margin: 40px 0;
+    font-size: 19px;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .lesson-summary-plate h3 {
     margin-top: 0;
     color: #005F73;
+    font-size: 22px;
+    font-weight: bold;
 }
 
 /* Кнопки и Задания */
@@ -591,13 +595,23 @@ button { cursor: pointer; }
     padding: 35px;
     border-radius: 30px;
     display: none; /* Скрыто до клика */
+    color: #CA6702;
+    font-size: 19px;
+    font-weight: bold;
 }
 
 .lesson-quiz-box input {
+    box-sizing: border-box;
     width: 100%;
     padding: 15px;
     border-radius: 15px;
     border: 1px solid rgba(0,0,0,0.1);
     margin-bottom: 15px;
-    font-size: 16px;
+    font-size: 19px;
+    outline: none; 
+    transition: all 0.3s ease;
+}
+
+.lesson-quiz-box input:focus {
+    box-shadow: 0 0 15px rgba(202, 103, 2, 0.4);
 }

@@ -31,9 +31,23 @@ class SubjectModel{
     }
 
     public function sort_wide($class){
-        $classes = [12, 13, 14];
+        $classes = ['1-4', '5-9', '10-11'];
         if(!in_array($class, $classes)){
             throw new Exception("Предметы для этого класса еще не были добавлены, мы над этим работаем и скоро добавим новые предметы");
+        }
+        switch($class){
+            case '1-4':
+                $class = 12;
+                break;
+            case '5-9':
+                $class = 13;
+                break;
+            case '10-11':
+                $class = 14;
+                break;
+            default:
+                $class = 12;
+                break;
         }
         $sql = "SELECT DISTINCT
             subjects.id, 
@@ -92,9 +106,24 @@ class SubjectModel{
     }
 
     public function get_grades($class){
-        $classes = [12, 13, 14];
+        $classes = ['1-4', '5-9', '10-11'];
         if(!in_array($class, $classes)){
             throw new Exception("Не удалось найти подходящие классы");
+        }
+
+        switch($class){
+            case '1-4':
+                $class = 12;
+                break;
+            case '5-9':
+                $class = 13;
+                break;
+            case '10-11':
+                $class = 14;
+                break;
+            default:
+                $class = 12;
+                break;
         }
 
         $sql = "SELECT id, title FROM more_classes WHERE grouped_class_id = :id";

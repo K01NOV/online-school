@@ -19,9 +19,9 @@ class PagesController{
         require_once __DIR__ . "/../../View/dashboard.php";
         require_once __DIR__ . "/../../View/footer.php";
     }
-    function showSubjectInfo(){
+    function showLesson(){
         require_once __DIR__ . "/../../View/head.php";
-        require_once __DIR__ . '/../../View/subject_info.php';
+        require_once __DIR__ . '/../../View/lessonSample.php';
         require_once __DIR__ . "/../../View/footer.php";
     }
 }

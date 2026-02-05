@@ -18,7 +18,8 @@ class Router{
         'dashboard' => [SubjectController::class, 'display_subjects'],
         'login' => [UserController::class, 'login'],
         'logout' => [UserController::class, 'logout'],
-        'subject-info' => [SubjectController::class, 'subject_info']
+        'subject-info' => [SubjectController::class, 'subject_info'],
+        'lesson' => [PagesController::class, 'showLesson']
     ];
 
     function __construct(){

@@ -36,6 +36,8 @@ class SubjectController{
         foreach ($subjects as $subject) {
             $subject->image = $this->refresh_link($subject);
         }
+
+        $a = 'dashboard';
         
         require_once __DIR__ . "/../../View/head.php";
         require_once __DIR__ . '/../../View/dashboard.php';
@@ -67,7 +69,7 @@ class SubjectController{
                 $topics = $this->topicModel->sort_detailed((int)$_GET['grade'], $subject->id);
             }
             else if(isset($_GET['class'])){
-                $topics = $this->topicModel->sort_wide((int)$_GET['class'], $subject->id);
+                $topics = $this->topicModel->sort_wide($_GET['class'], $subject->id);
             }
             else{
                 $topics = $this->topicModel->get_all($subject->id);
@@ -76,6 +78,7 @@ class SubjectController{
                 $topic->lessons = $this->lessonModel->get_lessons($topic->id);
             }
             $grades = $this->display_grades() ?? $_SESSION['grades'] ?? null;
+            $a = 'subject-info?id=' . urldecode($subject->id);
             
             require_once __DIR__ . "/../../View/head.php";
             require_once __DIR__ . "/../../View/subject_info.php";
