@@ -6,11 +6,13 @@ class TopicEntity{
     public $parent_id;
     public $order_num = 0;
     public $lessons = [];
+    public $subject_title;
     
-    public function __construct(int $id, string $name, int $parent_id){
+    public function __construct(int $id, string $name, int $parent_id, ?string $subject_title = null){
         $this->id = $id;
         $this->name = $name;
         $this->parent_id = $parent_id;
+        $this->subject_title = $subject_title;
     }
 
     public function write_lessons_amount(){

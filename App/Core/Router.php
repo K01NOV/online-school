@@ -1,5 +1,6 @@
 <?php namespace App\Core;
 
+use App\Control\SearchController;
 use App\Control\UserController;
 use App\Control\PagesController;
 use App\Control\SubjectController;
@@ -19,7 +20,8 @@ class Router{
         'login' => [UserController::class, 'login'],
         'logout' => [UserController::class, 'logout'],
         'subject-info' => [SubjectController::class, 'subject_info'],
-        'lesson' => [PagesController::class, 'showLesson']
+        'lesson' => [PagesController::class, 'showLesson'],
+        'search-results' => [SearchController::class, 'prepare_searchResults']
     ];
 
     function __construct(){
