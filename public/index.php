@@ -7,3 +7,4 @@ $route = $_GET['route'] ?? '';
 
 $router = new Router();
 $router->run($route);
+//test
