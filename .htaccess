@@ -9,3 +9,5 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # Перенаправляем все запросы в папку public
 RewriteRule ^(.*)$ public/$1 [L]
+
+# RewriteRule ^$ public/index.php?route=home [L,QSA] 
