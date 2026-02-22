@@ -1,3 +1,5 @@
 .osp/
 App/Config/
+!App/Config/db_sample.php
 vendor/
+.env

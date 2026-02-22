@@ -27,6 +27,7 @@ class Router{
     function __construct(){
         session_start();
         require_once __DIR__ . '/../Config/DataBase.php';
+        require_once __DIR__ . '/../Config/config.php';
         try{
             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
             $this->conn = new PDO($dsn, DB_USER, DB_PASS, [
@@ -51,4 +52,5 @@ class Router{
             echo "404 - Страница не найдена на royal-academy.lt";
         }
     }
+
 }
