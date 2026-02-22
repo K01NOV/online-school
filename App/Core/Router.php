@@ -21,13 +21,13 @@ class Router{
         'logout' => [UserController::class, 'logout'],
         'subject-info' => [SubjectController::class, 'subject_info'],
         'lesson' => [PagesController::class, 'showLesson'],
-        'search-results' => [SearchController::class, 'prepare_searchResults']
+        'search-results' => [SearchController::class, 'prepare_searchResults'],
+        'back-office' => [PagesController::class, 'showAdmin'],
     ];
 
     function __construct(){
         session_start();
         require_once __DIR__ . '/../Config/DataBase.php';
-        require_once __DIR__ . '/../Config/config.php';
         try{
             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
             $this->conn = new PDO($dsn, DB_USER, DB_PASS, [

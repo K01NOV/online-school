@@ -1,18 +1,19 @@
 <?php namespace App\Entity;
 
+use App\Enum\UserType;
 class UserEntity{
     public $name;
     public $email;
-    public $type;
+    public UserType $type;
     public $nick;
     public $password;
 
-    public function __construct($name, $email, $password, $type, $nick){
+    public function __construct($name, $email, $password, UserType $type, $nick){
         $this->name = $this->name_validation($name);
         $this->email = $this->email_validation($email);
         $this->password = $this->password_validation($password);
         $this->nick = $this->nickname_validation($nick);
-        $this->type = $this->type_validation($type);
+        $this->type = $type;
     }
 
     public function name_validation($name){
