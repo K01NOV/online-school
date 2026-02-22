@@ -1,5 +1,6 @@
 <?php namespace App\Core;
 
+use App\Control\OfficeControl;
 use App\Control\SearchController;
 use App\Control\UserController;
 use App\Control\PagesController;
@@ -22,7 +23,7 @@ class Router{
         'subject-info' => [SubjectController::class, 'subject_info'],
         'lesson' => [PagesController::class, 'showLesson'],
         'search-results' => [SearchController::class, 'prepare_searchResults'],
-        'back-office' => [PagesController::class, 'showAdmin'],
+        'back-office' => [OfficeControl::class, 'run_admin'],
     ];
 
     function __construct(){
@@ -41,9 +42,11 @@ class Router{
     }
 
     public function run($route){
-        if(array_key_exists($route, $this->routes)){
-            $controlName = $this->routes[$route][0];
-            $method = $this->routes[$route][1];
+        $parts = explode('/', $route);
+        $mainRoute = $parts[0];
+        if(array_key_exists($mainRoute, $this->routes)){
+            $controlName = $this->routes[$mainRoute][0];
+            $method = $this->routes[$mainRoute][1];
             $controller = new $controlName($this->conn);
             $controller->$method();
         }

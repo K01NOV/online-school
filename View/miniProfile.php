@@ -1,5 +1,5 @@
 <div class="mini-profile">
-    <img class="mini-profile-avatar" src="assets/avatar3.png" alt="">
+    <img class="mini-profile-avatar" src="/assets/avatar3.png" alt="">
     <div class="mini-profile-info">
         <p class="mini-profile-name">
             <?php echo htmlspecialchars($_SESSION['name'])?>
