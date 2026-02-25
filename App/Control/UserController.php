@@ -4,6 +4,7 @@ use App\Entity\UserEntity;
 use Exception;
 use PDO;
 use App\Model\UserModel;
+use App\Enum\UserType;
 
 class UserController{
     private $conn;
@@ -22,12 +23,12 @@ class UserController{
                     $_POST['name'],
                     $_POST['email'],
                     $_POST['password'],
-                    $_POST['account_type'],
+                    UserType::from_ru($_POST['account_type']),
                     $_POST['nick']
                 );
 
                 if($this->userModel->check_email_existance($this->userEntity->email)){
-                    throw new Exception("Этот email уже занят: " . $this->userEntity->email);
+                    throw new \InvalidArgumentException("Этот email уже занят: " . $this->userEntity->email);
                 }
                 if (!$this->userModel->createUser($this->userEntity)) {
                     throw new Exception("Не удалось создать профиль, попробуйте еще раз");
@@ -44,8 +45,13 @@ class UserController{
                 header("Location: /dashboard");
                 exit();
 
-            } catch(Exception $e){
+            } catch (\InvalidArgumentException $e) {
                 $_SESSION['error'] = $e->getMessage();
+                header("Location: /registration");
+                exit();
+            } catch (Exception $e) {
+                error_log("СИСТЕМНЫЙ СБОЙ: " . $e->getMessage());
+                $_SESSION['error'] = "На сервере что-то пошло не так, попробуйте позже";
                 header("Location: /registration");
                 exit();
             }
@@ -68,9 +74,14 @@ class UserController{
                     header("Location: /dashboard");
                     exit();
                 }
-                throw new Exception("Неверный логин или пароль (хз короч)");
-            } catch(Exception $e){
+                throw new \InvalidArgumentException("Неверный логин или пароль");
+            }  catch (\InvalidArgumentException $e) {
                 $_SESSION['error'] = $e->getMessage();
+                header("Location: /registration");
+                exit();
+            } catch (Exception $e) {
+                error_log("СИСТЕМНЫЙ СБОЙ: " . $e->getMessage());
+                $_SESSION['error'] = "На сервере что-то пошло не так, попробуйте позже";
                 header("Location: /registration");
                 exit();
             }
