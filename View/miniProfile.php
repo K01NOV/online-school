@@ -12,5 +12,6 @@
     </div>
     <form action="/logout" method="POST">
         <button class="mini-profile-logout" type="submit">Выйти ></button>
+        <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['auth_token'])?>" style="display: none">
     </form>
 </div>
