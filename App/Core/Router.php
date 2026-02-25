@@ -5,6 +5,7 @@ use App\Control\SearchController;
 use App\Control\UserController;
 use App\Control\PagesController;
 use App\Control\SubjectController;
+use App\Core\Security;
 
 use PDO;
 use PDOException;
@@ -28,6 +29,10 @@ class Router{
 
     function __construct(){
         session_start();
+        if(!isset($_SESSION['auth_token'])){
+            Security::generate_token();
+        }
+        
         require_once __DIR__ . '/../Config/DataBase.php';
         try{
             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
