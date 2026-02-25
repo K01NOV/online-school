@@ -5,6 +5,7 @@ use Exception;
 use PDO;
 use App\Model\UserModel;
 use App\Enum\UserType;
+use App\Core\Security;
 
 class UserController{
     private $conn;
@@ -18,6 +19,10 @@ class UserController{
 
     function createUser(){
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            if(!Security::check_token($_POST['token'])){
+                header("Location: /registration");
+                exit();
+            }
             try{
                 $this->userEntity = new UserEntity(
                     $_POST['name'],
@@ -60,6 +65,10 @@ class UserController{
 
     function login(){
         if($_SERVER['REQUEST_METHOD'] ==='POST'){
+            if(!Security::check_token($_POST['token'])){
+                header("Location: /registration");
+                exit();
+            }
             try{
                 $info = $this->userModel->get_user_data($_POST['login']);
                 if($info && password_verify($_POST['password'], $info['password'])){
@@ -90,7 +99,10 @@ class UserController{
 
     function logout(){
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            session_start();
+            if(!Security::check_token($_POST['token'])){
+                header("Location: /registration");
+                exit();
+            }
             session_unset();
             session_destroy();
             header("Location: /registration");

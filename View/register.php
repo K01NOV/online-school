@@ -15,12 +15,14 @@
         </select>
         <input type="password" placeholder="password" name="password">
         <input type="submit">
+        <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['auth_token'])?>" style="display: none">
     </form>
     <form class="reg-auth-form" action="/login" method="POST">
         <h3>Authorization</h3>
         <input type="email or nickname" placeholder="email" name="login">
         <input type="password" placeholder="password" name="password">
         <input type="submit">
+        <input type="hidden" name="token" value="<?= htmlspecialchars($_SESSION['auth_token'])?>" style="display: none">
     </form>
 </div>
 
