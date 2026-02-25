@@ -1,5 +1,8 @@
-<nav class="navigation-row">
-    <a href="#" class="nav-btn"><h2>Таблицы</h2></a>
-    <a href="#" class="nav-btn"><h2>Запросы</h2></a>
-    <a href="#" class="nav-btn"><h2>Конструктор</h2></a>
-</nav>
+<body class="bo-body">
+    <div class="bo-container">
+        <?php require_once __DIR__ . "/tables_list.php" ?>
+    </div>
+    <main class="bo-main-content">
+        <?php require_once __DIR__ . "/table.php" ?>
+    </main>
+</body>
