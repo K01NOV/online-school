@@ -1,6 +1,5 @@
 <nav class="bo-side-nav">
-    <a href="?table=users" class="bo-nav-link active">Пользователи</a>
-    <a href="?table=subjects" class="bo-nav-link">Предметы</a>
-    <a href="?table=achievements" class="bo-nav-link">Ачивки</a>
-    <a href="?table=lessons" class="bo-nav-link">Уроки</a>
+    <?php if(isset($tables)): foreach($tables as $table): ?>
+        <a href="?table=<?= urlencode($table) ?>" class="bo-nav-link <?= (isset($_GET['table']) && $_GET['table'] == $table) ? 'active' : '' ?>"><?= htmlspecialchars($table) ?></a>
+    <?php endforeach; endif;?>
 </nav>

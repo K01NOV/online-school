@@ -1,39 +1,72 @@
 <header class="bo-header">
-    <h1>Редактирование таблицы: Users</h1>
+    <h1>Редактирование таблицы<? if(isset($_GET['table'])) echo ": " . $_GET['table']?></h1>
 </header>
-<section class="bo-table-section">
-    <table class="bo-table">
-        <thead>
+<? if(isset($_GET['table'])):?>
+    <section class="bo-table-section">
+        <table class="bo-table">
+    <thead>
+        <tr>
+            <?php foreach($columns as $colName => $settings): ?>
+                <th><?= htmlspecialchars($colName) ?></th>
+            <?php endforeach; ?>
+            <th class="bo-actions-column">Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($data as $row): ?>
             <tr>
-                <th>ID</th>
-                <th>Имя</th>
-                <th>Email</th>
-                <th>Роль</th>
-                <th class="bo-actions-column">Действие</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td><input type="text" value="Иван Иванов" class="bo-input"></td>
-                <td><input type="email" value="ivan@example.com" class="bo-input"></td>
-                <td>
-                    <select class="bo-input">
-                        <option>Admin</option>
-                        <option selected>Student</option>
-                    </select>
-                </td>
+                <?php foreach($columns as $colName => $settings): ?>
+                    <td>
+                        <?php 
+                        $value = $row[$colName] ?? ""; // Достаем значение именно этой колонки из строки БД
+                        
+                        // 1. Если это ID — просто выводим текст (редактировать нельзя)
+                        if ($colName === 'id' || $settings['disabled'] === 'disabled'): ?>
+                            <span><?= htmlspecialchars($value) ?></span>
+                            <input type="hidden" name="<?= $colName ?>[]" value="<?= htmlspecialchars($value) ?>">
+                        
+                        <?php else: ?>
+                            <input 
+                                type="<?= $settings['type'] ?>" 
+                                value="<?= htmlspecialchars($value) ?>" 
+                                class="bo-input"
+                                <?= $settings['required'] ?>
+                            >
+                        <?php endif; ?>
+                    </td>
+                <?php endforeach; ?>
+
                 <td>
                     <button class="bo-btn-delete">DELETE</button>
                 </td>
             </tr>
+        <?php endforeach;?>
             <tr>
-                <td>2</td>
-                <td><input type="text" value="Петр Петров" class="bo-input"></td>
-                <td><input type="email" value="petr@example.com" class="bo-input"></td>
-                <td><select class="bo-input"><option>Admin</option></select></td>
-                <td><button class="bo-btn-delete">DELETE</button></td>
+                <?php foreach($columns as $colName => $settings):?>
+                    <td>
+                        <?php if ($colName === 'id' || $settings['disabled'] === 'disabled'): ?>
+                            <span>
+                                <?php if(!empty($data)){
+                                    $id = $data[count($data) - 1]['id'] + 1;
+                                } else{
+                                    $id = 1;
+                                }
+                                echo htmlspecialchars($id);?>
+                            </span>
+                            <input type="hidden" name="<?= $colName ?>[]" value="<?= htmlspecialchars($value) ?>">
+                        
+                        <?php else: ?>
+                            <input 
+                                type="<?= $settings['type'] ?>" 
+                                value="" 
+                                class="bo-input"
+                                <?= $settings['required'] ?>
+                            >
+                        <?php endif; ?>
+                    </td>
+                <?php endforeach?>
             </tr>
-        </tbody>
-    </table>
-</section>
+    </tbody>
+</table>
+    </section>
+<?php endif?>
