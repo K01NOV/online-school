@@ -30,14 +30,14 @@
             </nav>
             <nav class="classes-row">
                 <a href="/<?=urldecode($a)?>" class="class-pill">Все</a>
-                <a href="/<?=urldecode($a)?>&class=1-4" class="class-pill <?= (isset($_GET['class']) && $_GET['class'] == '1-4') ? 'active' : '' ?>">1-4 класс</a>
-                <a href="/<?=urldecode($a)?>&class=5-9" class="class-pill <?= (isset($_GET['class']) && $_GET['class'] == '5-9') ? 'active' : '' ?>">5-9 класс</a>
-                <a href="/<?=urldecode($a)?>&class=10-11" class="class-pill <?= (isset($_GET['class']) && $_GET['class'] == '10-11') ? 'active' : '' ?>">10-11 класс</a>
+                <a href="?class=1-4" class="class-pill <?= (isset($_GET['class']) && $_GET['class'] == '1-4') ? 'active' : '' ?>">1-4 класс</a>
+                <a href="?class=5-9" class="class-pill <?= (isset($_GET['class']) && $_GET['class'] == '5-9') ? 'active' : '' ?>">5-9 класс</a>
+                <a href="?class=10-11" class="class-pill <?= (isset($_GET['class']) && $_GET['class'] == '10-11') ? 'active' : '' ?>">10-11 класс</a>
             </nav>
             <?php if(isset($grades)): ?>
                 <nav class="classes-row">
                     <?php foreach($grades as $id => $title): ?>
-                        <a href="/<?=urldecode($a)?>&class=<?= urldecode($_GET['class'])?>&grade=<?= urldecode($id) ?>" class="class-pill <?= (isset($_GET['grade']) && $_GET['grade'] == $id) ? 'active' : '' ?>"><?= urldecode($title) ?></a>
+                        <a href="?class=<?= urldecode($_GET['class'])?>&grade=<?= urldecode($id) ?>" class="class-pill <?= (isset($_GET['grade']) && $_GET['grade'] == $id) ? 'active' : '' ?>"><?= htmlspecialchars($title) ?></a>
                     <?php endforeach?>
                 </nav>
             <?php endif?>
