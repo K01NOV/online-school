@@ -1,5 +1,5 @@
 <header class="bo-header">
-    <h1>Редактирование таблицы<? if(isset($_GET['table'])) echo ": " . $_GET['table']?></h1>
+    <h1>Редактирование таблицы<? if(isset($_GET['table'])) echo ": " . htmlspecialchars($_GET['table'])?></h1>
 </header>
 <? if(isset($_GET['table'])):?>
     <section class="bo-table-section">
@@ -20,7 +20,7 @@
                         <?php 
                         $value = $row[$colName] ?? ""; // Достаем значение именно этой колонки из строки БД
                         
-                        // 1. Если это ID — просто выводим текст (редактировать нельзя)
+                        // Если это ID просто выводим текст (редактировать нельзя)
                         if ($colName === 'id' || $settings['disabled'] === 'disabled'): ?>
                             <span><?= htmlspecialchars($value) ?></span>
                             <input type="hidden" name="<?= $colName ?>[]" value="<?= htmlspecialchars($value) ?>">
@@ -29,7 +29,10 @@
                             <input 
                                 type="<?= $settings['type'] ?>" 
                                 value="<?= htmlspecialchars($value) ?>" 
-                                class="bo-input"
+                                class="bo-input ajax-input"
+                                name="<?= htmlspecialchars($colName)?>"
+                                data-id="<?= htmlspecialchars($row['id'])?>"
+                                data-table="<? if(isset($_GET['table'])) echo htmlspecialchars($_GET['table'])?>"
                                 <?= $settings['required'] ?>
                             >
                         <?php endif; ?>
@@ -37,7 +40,12 @@
                 <?php endforeach; ?>
 
                 <td>
-                    <button class="bo-btn-delete">DELETE</button>
+                    <button 
+                        class="bo-btn-delete ajax-delete" 
+                        data-id="<?= htmlspecialchars($row['id'])?>" 
+                        data-table="<? if(isset($_GET['table'])) echo htmlspecialchars($_GET['table'])?>"
+                        >DELETE
+                    </button>
                 </td>
             </tr>
         <?php endforeach;?>
@@ -59,7 +67,9 @@
                             <input 
                                 type="<?= $settings['type'] ?>" 
                                 value="" 
-                                class="bo-input"
+                                class="bo-input ajax-empty"
+                                name="<?= htmlspecialchars($colName)?>"
+                                data-table="<? if(isset($_GET['table'])) echo htmlspecialchars($_GET['table'])?>"
                                 <?= $settings['required'] ?>
                             >
                         <?php endif; ?>
