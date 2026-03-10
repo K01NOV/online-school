@@ -36,7 +36,7 @@
                 <h2 class="path-title">Программа обучения</h2>
                 <div class="accordion">
                     <?php foreach($topics as $topic):?>
-                        <div class="topic-item">
+                        <div class="topic-item" id="topic-<?= $topic->id ?>" data-topic-id="<?= $topic->id ?>">
                             <div class="topic-header" onclick="toggleTopic(this)">
                                 <div class="topic-marker"></div>
                                 <h3 class="topic-name"><?= htmlspecialchars($topic->name) ?></h3>
