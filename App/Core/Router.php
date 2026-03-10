@@ -1,5 +1,7 @@
 <?php namespace App\Core;
 
+use Api\TableApi;
+use App\Control\ApiControl;
 use App\Control\OfficeControl;
 use App\Control\SearchController;
 use App\Control\UserController;
@@ -25,6 +27,7 @@ class Router{
         'lesson' => [PagesController::class, 'showLesson'],
         'search-results' => [SearchController::class, 'prepare_searchResults'],
         'back-office' => [OfficeControl::class, 'run_admin'],
+        'api' => [ApiControl::class, 'run_api'],
     ];
 
     function __construct(){
