@@ -79,7 +79,10 @@ class UserController{
                     if(!empty($info['nickname'])){
                         $_SESSION['nickname'] = $info['nickname'];
                     }
-                    $info = null;
+                    if($info['type'] == 'admin'){
+                        header("Location: /back-office");
+                        exit();
+                    }
                     header("Location: /dashboard");
                     exit();
                 }
