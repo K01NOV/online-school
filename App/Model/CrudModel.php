@@ -84,14 +84,22 @@ class CrudModel{
     public function insert_into($table, $data){
         $tables = $this->get_all_tables();
         if (!in_array($table, $tables)) {
-            throw new \Exception("Таблица не найдена");
+            throw new \Exception("Таблица не найдена", 404);
         }
 
         if (empty($data)) {
-            throw new \Exception("Недостаточно данных");
+            throw new \Exception("Недостаточно данных", 400);
         }
 
         $columns = array_keys($data);
+        $realColumns = $this->get_columns($table);
+        $insertData = [];
+        foreach ($realColumns as $colName => $colInfo) {
+            if ($colName != 'id'){
+                $insertData[$colName] = $data[$colName] ?? '';
+            }
+        }
+        $columns = array_keys($insertData);
         $colString = implode(", ", array_map(function($col){ return "`$col`"; }, $columns));
         $placeholders = ":" . implode(", :", $columns);
         $sql = "INSERT INTO `$table` ($colString) VALUES ($placeholders)";
@@ -103,6 +111,27 @@ class CrudModel{
             return $this->conn->lastInsertId(); // Возвращаем id
         }
 
-        throw new \Exception("Ошибка при вставке данных");
+        throw new \Exception("Ошибка при вставке данных", 500);
+    }
+
+    public function update_at($table, $column, $value, $id){
+        $tables = $this->get_all_tables();
+        if (!in_array($table, $tables)) {
+            throw new \Exception("Таблица не найдена");
+        }
+
+        $realColumns = $this->get_columns($table);
+        if(!array_key_exists($column, $realColumns)){
+            throw new \Exception("Столбец не найден: $column");
+        }
+
+        $sql = "UPDATE $table SET $column = :new WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(":new", $value);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        if($stmt->execute()){
+            return true;
+        }
+        throw new \Exception("Не удалось обновить значение: $column = $value");
     }
 }
