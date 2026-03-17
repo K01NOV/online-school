@@ -75,6 +75,7 @@
                         <?php endif; ?>
                     </td>
                 <?php endforeach?>
+                <td></td>
             </tr>
     </tbody>
 </table>

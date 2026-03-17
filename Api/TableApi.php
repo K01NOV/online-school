@@ -102,7 +102,7 @@ class TableApi{
             if(!$result){
                 throw new \Exception("Не удалось вставить данные", 400);
             }
-            echo json_encode(['success' => true, 'message' => 'Запись успешно вставлена']);
+            echo json_encode(['success' => true, 'message' => 'Запись успешно вставлена', 'id' => $result]);
             exit();
         } catch(\Exception $e){
             $rawCode = $e->getCode();
