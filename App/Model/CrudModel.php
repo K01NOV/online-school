@@ -70,7 +70,9 @@ class CrudModel{
         if(!in_array($table, $tables)){
             throw new \Exception("Таблица не найдена: " . $table);
         }
-
+        if ($id <= 0){
+            throw new \Exception("Некорректный ID", 400);
+        } 
         $sql = "DELETE FROM `$table` WHERE `$table`.`id` = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(":id", $id, PDO::PARAM_INT);
@@ -96,7 +98,7 @@ class CrudModel{
         $insertData = [];
         foreach ($realColumns as $colName => $colInfo) {
             if ($colName != 'id'){
-                $insertData[$colName] = $data[$colName] ?? '';
+                $insertData[$colName] = $data[$colName] ?? $this->get_default_value($colInfo['type']);
             }
         }
         $columns = array_keys($insertData);
@@ -104,10 +106,7 @@ class CrudModel{
         $placeholders = ":" . implode(", :", $columns);
         $sql = "INSERT INTO `$table` ($colString) VALUES ($placeholders)";
         $stmt = $this->conn->prepare($sql);
-        foreach ($data as $key => $value) {
-            $stmt->bindValue(":$key", $value);
-        }
-        if ($stmt->execute()) {
+        if ($stmt->execute($insertData)) {
             return $this->conn->lastInsertId(); // Возвращаем id
         }
 
@@ -133,5 +132,16 @@ class CrudModel{
             return true;
         }
         throw new \Exception("Не удалось обновить значение: $column = $value");
+    }
+
+    private function get_default_value($type){
+        switch($type){
+            case 'number':
+                return 0;
+            case 'date':
+                return date('Y-m-d');
+            default:
+                return '';
+        }
     }
 }
