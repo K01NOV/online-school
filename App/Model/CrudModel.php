@@ -22,10 +22,7 @@ class CrudModel{
     }
 
     public function get_columns($table){
-        $tables = $this->get_all_tables();
-        if(!in_array($table, $tables)){
-            throw new \Exception("Таблица не найдена: " . $table);
-        }
+        $this->validate_table($table);
         $sql = "SHOW COLUMNS FROM online_school.`$table`";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
@@ -54,10 +51,7 @@ class CrudModel{
     }
 
     public function get_data($table){
-        $tables = $this->get_all_tables();
-        if(!in_array($table, $tables)){
-            throw new \Exception("Таблица не найдена: " . $table);
-        }
+        $this->validate_table($table);
         $sql = "SELECT DISTINCT * FROM `$table`";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
@@ -66,10 +60,7 @@ class CrudModel{
     }
 
     public function delete_row($table, int $id){
-        $tables = $this->get_all_tables();
-        if(!in_array($table, $tables)){
-            throw new \Exception("Таблица не найдена: " . $table);
-        }
+        $this->validate_table($table);
         if ($id <= 0){
             throw new \Exception("Некорректный ID", 400);
         } 
@@ -84,10 +75,7 @@ class CrudModel{
     }
 
     public function insert_into($table, $data){
-        $tables = $this->get_all_tables();
-        if (!in_array($table, $tables)) {
-            throw new \Exception("Таблица не найдена", 404);
-        }
+        $this->validate_table($table);
 
         if (empty($data)) {
             throw new \Exception("Недостаточно данных", 400);
@@ -114,10 +102,7 @@ class CrudModel{
     }
 
     public function update_at($table, $column, $value, $id){
-        $tables = $this->get_all_tables();
-        if (!in_array($table, $tables)) {
-            throw new \Exception("Таблица не найдена");
-        }
+        $this->validate_table($table);
 
         $realColumns = $this->get_columns($table);
         if(!array_key_exists($column, $realColumns)){
@@ -143,5 +128,56 @@ class CrudModel{
             default:
                 return '';
         }
+    }
+
+    public function create_column($table, $columnName, $params){
+        $this->validate_table($table);
+        $constrains = $this->generate_constrains($params);
+        $sql = "ALTER TABLE `$table` ADD `$columnName` $constrains";
+        $stmt = $this->conn->prepare($sql);
+        if($stmt->execute()){
+            return true;
+        }
+        throw new \Exception("Не удалось создать колонку: $columnName");
+    }
+
+    private function validate_table($table){
+        $tables = $this->get_all_tables();
+        if (!in_array($table, $tables)) {
+            throw new \Exception("Таблица не найдена");
+        }
+        return true;
+    }
+
+    private function generate_constrains($params){
+        // $params = ['type' => 'VARCHAR(255)', 'is_null' => false, 'default' => 'No title', 'is_unique' => false, 'is_ai' => false];
+        $constraints[] = $params['type'] ?? 'VARCHAR(255)';
+        if (!empty($params['is_primary'])) {
+            $constraints[] = 'NOT NULL';
+            $constraints[] = "PRIMARY KEY";
+        }
+        if(isset($params['is_null']) && !in_array('NOT NULL', $constraints)){
+            $constraints[] = $params['is_null'] ? 'NULL' : 'NOT NULL';
+        }
+        if (isset($params['default']) && $params['default'] !== '') {
+            $default = $params['default'];
+            $constraints[] = "DEFAULT " . ($this->is_number($params['type']) ? $default : "'$default'");
+        }
+        if (!empty($params['is_unique'])) {
+            $constraints[] = "UNIQUE";
+        }
+        if (!empty($params['is_ai'])) {
+            $constraints[] = "AUTO_INCREMENT";
+        }
+        return implode(' ', $constraints);
+    }
+
+    private function is_number($type) {
+        $type = strtolower($type);
+        return strpos($type, 'int') !== false || strpos($type, 'decimal') !== false || strpos($type, 'float') !== false;
+    }
+
+    public function change_column_name(){
+
     }
 }
