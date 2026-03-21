@@ -770,6 +770,7 @@ button { cursor: pointer; }
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
+    gap: 30px;
 }
 
 .bo-container {
@@ -908,4 +909,81 @@ button { cursor: pointer; }
 .bo-actions-column {
     text-align: center;
     width: 100px;
+}
+
+
+
+
+
+
+
+
+
+.subject-title-list{
+    font-size: 20px;
+}
+
+.add {
+    /* Центрирование самого плюса внутри круга */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Размеры и форма */
+    width: 45px;
+    height: 45px;
+    background-color: #ffffff;
+    border: 2px dashed #ced6e0;
+    border-radius: 50%;
+    
+    cursor: pointer;
+    
+    /* Эффекты */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    
+    /* Чтобы кнопка не прилипала к краям в списках */
+    margin: 10px auto; 
+}
+
+.add > img{
+    width: 30px;
+}
+
+.add:hover {
+    background-color: #f1f2f6;
+    transform: scale(1.1) rotate(90deg); /* Слегка увеличим и повернем */
+    box-shadow: 0 4px 12px rgba(83, 82, 237, 0.2);
+}
+
+.subjects-list-container{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.admin-edit-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px dashed #5352ed; /* Подчеркивание для акцента */
+    font-family: inherit;
+    font-size: inherit; /* Чтобы размер был как у h3 */
+    font-weight: bold;
+    color: #2f3542;
+    outline: none;
+    padding: 2px 5px;
+    transition: border-color 0.3s;
+}
+
+.admin-edit-input:focus {
+    border-bottom-style: solid;
+    color: #5352ed;
+}
+
+.admin-edit-input::placeholder {
+    color: #a4b0be;
+    font-weight: normal;
 }
