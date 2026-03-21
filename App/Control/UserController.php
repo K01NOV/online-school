@@ -60,6 +60,10 @@ class UserController{
                 header("Location: /registration");
                 exit();
             }
+        } else{
+            $_SESSION['error'] = "На сервере что-то пошло не так, попробуйте позже";
+            header("Location: /registration");
+            exit();
         }
     }
 
@@ -97,6 +101,10 @@ class UserController{
                 header("Location: /registration");
                 exit();
             }
+        } else{
+            $_SESSION['error'] = "На сервере что-то пошло не так, попробуйте позже";
+            header("Location: /registration");
+            exit();
         }
     }
 
