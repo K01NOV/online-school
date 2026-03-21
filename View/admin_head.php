@@ -18,7 +18,7 @@
         <main class="dashboard-content">
             <nav class="navigation-row">
                 <a href="/back-office/crud" class="nav-btn"><h2>CRUD</h2></a>
-                <a href="#" class="nav-btn"><h2>Предметы</h2></a>
+                <a href="/back-office/subjects" class="nav-btn"><h2>Предметы</h2></a>
                 <a href="#" class="nav-btn"><h2>Пользователи</h2></a>
                 <a href="/back-office" class="nav-btn"><h2>Домой</h2></a>
                 <a href="#" class="nav-btn nav-btn--special"><h2>Почта</h2></a>
