@@ -1,5 +1,3 @@
-<?php if(!isset($_SESSION['name'])){header("Location: /registration"); exit(); } ?>
-
 <div class="subject-container">
     <header class="subject-header-hero">
         <div class="subject-cover">

@@ -1,5 +1,3 @@
-<?php if(!isset($_SESSION['name'])){header("Location: /registration"); exit(); } ?>
-
 <?php if(isset($subjects)):?>
     <section class="subjects-grid">
         <?php foreach($subjects as $subject): ?>
