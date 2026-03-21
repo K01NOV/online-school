@@ -31,7 +31,6 @@ class Router{
     ];
 
     function __construct(){
-        session_start();
         if(!isset($_SESSION['auth_token'])){
             Security::generate_token();
         }
