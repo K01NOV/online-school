@@ -28,7 +28,8 @@ class SearchModel{
             $subjects[] = new SubjectEntity(
                 $row['id'],
                 $row['title'],
-                $row['image_url']
+                $row['image_url'],
+                $row['description']
             );
         }
         return $subjects;
@@ -77,7 +78,8 @@ class SearchModel{
                 $row['title'],
                 $row['topic_id'],
                 $row['topic_title'],
-                $row['subject_title']
+                $row['subject_title'],
+                null
             );
         }
         return $lessons;

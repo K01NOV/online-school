@@ -24,7 +24,8 @@ class SubjectModel{
             $subjects[] = new SubjectEntity(
                 (int)$row['id'],
                 $row['title'],
-                $row['image_url']
+                $row['image_url'],
+                $row['description']
             );
         }
         return $subjects;
@@ -70,7 +71,8 @@ class SubjectModel{
             $subjects[] = new SubjectEntity(
                 (int)$row['id'],
                 $row['subject_title'],
-                $row['image_url']
+                $row['image_url'],
+                $row['description']
             );
         }
         return $subjects;
@@ -99,7 +101,8 @@ class SubjectModel{
             $subjects[] = new SubjectEntity(
                 (int)$row['id'],
                 $row['subject_title'],
-                $row['image_url']
+                $row['image_url'],
+                $row['description']
             );
         }
         return $subjects;
@@ -148,7 +151,8 @@ class SubjectModel{
         $subject = new SubjectEntity(
             $row['id'],
             $row['title'],
-            $row['image_url']
+            $row['image_url'],
+            $row['description']
         );
         return $subject;
     }
@@ -156,7 +160,7 @@ class SubjectModel{
     public function getDirectLink(string $publicUrl): string {
         $token = $this->yandexConfig['yandex']['token'];
         
-        $apiUri = "https://cloud-api.yandex.net/v1/disk/public/resources?public_key=" . urlencode($publicUrl) . "&preview_size=L&preview_crop=true";
+        $apiUri = "https://cloud-api.yandex.net/v1/disk/public/resources?public_key=" . urlencode($publicUrl) . "&preview_size=L&preview_crop=false";
 
         $ch = curl_init($apiUri);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: OAuth ' . $token]);
@@ -165,13 +169,11 @@ class SubjectModel{
 
         $response = curl_exec($ch);
         $data = json_decode($response, true);
-        curl_close($ch);
 
         if (isset($data['preview'])) {
             return $data['preview'];
         }
-
-        // Если превью нет, попробуем вернуть оригинальный href как запасной вариант
+        
         return $data['file'] ?? $data['href'] ?? 'assets/img/no-image.png';
     }
 }
