@@ -9,17 +9,17 @@
             <h1 class="subject-title"><?= htmlspecialchars($subject->name) ?></h1>
             
             <div class="subject-description">
-                <p>Изучаем тайны природы, историю и устройство нашего мира. Курс адаптирован специально для учеников 4 класса.</p>
+                <p><?= $subject->description ? htmlspecialchars($subject->description) : '' ?></p>
             </div>
 
             <div class="subject-stats">
                 <div class="stat-item">
-                    <span class="stat-value">142</span>
+                    <span class="stat-value">0</span>
                     <span class="stat-label">записались</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-item">
-                    <span class="stat-value">89</span>
+                    <span class="stat-value">0</span>
                     <span class="stat-label">прошли курс</span>
                 </div>
             </div>

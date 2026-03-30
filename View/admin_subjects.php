@@ -1,7 +1,7 @@
 <div class="bo-body">
     <?php require_once __DIR__ . "/subject_list.php"; 
     if(isset($current)):?>
-    <div>
+    <div style="width: 80%;">
         <div class="subject-container">
             <header class="subject-header-hero">
                 <div class="subject-cover">
@@ -13,17 +13,17 @@
                     <h1 class="subject-title"><?= htmlspecialchars($current->name) ?></h1>
                     
                     <div class="subject-description">
-                        <p>Изучаем тайны природы, историю и устройство нашего мира. Курс адаптирован специально для учеников 4 класса.</p>
+                        <p><?= $current->description ? htmlspecialchars($current->description) : '' ?></p>
                     </div>
 
                     <div class="subject-stats">
                         <div class="stat-item">
-                            <span class="stat-value">142</span>
+                            <span class="stat-value">0</span>
                             <span class="stat-label">записались</span>
                         </div>
                         <div class="stat-divider"></div>
                         <div class="stat-item">
-                            <span class="stat-value">89</span>
+                            <span class="stat-value">0</span>
                             <span class="stat-label">прошли курс</span>
                         </div>
                     </div>
@@ -54,31 +54,44 @@
                                                     </a>
                                                 <?php endforeach?>
                                             <?php endif?>
-                                            <div class="add" data-action="add-lesson">
+                                            <a class="lesson-link new-lesson-row" style="display: none;">
+                                                <div class="lesson-marker-orange"></div>
+                                                <h3 class="topic-name">
+                                                <input type="text" 
+                                                    name="name"
+                                                    class="ajax-empty admin-edit-input" 
+                                                    data-table="lessons" 
+                                                    data-parent-column="topic_id"
+                                                    data-parent-id="<?= htmlspecialchars($topic->id) ?>"
+                                                    placeholder="Название нового урока...">
+                                            </h3>
+                                            </a>
+                                            <button onclick="showNewLessonRow(this)" class="add" data-action="add-lesson">
                                                 <img src="/assets/plus.svg" alt="">
-                                            </div>
+                                            </button>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             <?php endforeach ?>
-                        </div>
-                        <div class="topic-item new-topic-row" style="display: none;">
-                        <div class="topic-header">
-                                <div class="topic-marker"></div>
-                                <h3 class="topic-name">
-                                    <input type="text" 
-                                        name="name"
-                                        class="ajax-empty admin-edit-input" 
-                                        data-table="topics" 
-                                        data-parent-column="subject_id"
-                                        data-parent-id="<?= $current->id ?>"
-                                        placeholder="Название новой темы...">
-                                </h3>
+                            <div class="topic-item new-topic-row" style="display: none;">
+                                <div class="topic-header">
+                                    <div class="topic-marker"></div>
+                                    <h3 class="topic-name">
+                                        <input type="text" 
+                                            name="name"
+                                            class="ajax-empty admin-edit-input" 
+                                            data-table="topics" 
+                                            data-parent-column="subject_id"
+                                            data-parent-id="<?= htmlspecialchars($current->id) ?>"
+                                            placeholder="Название новой темы...">
+                                    </h3>
+                                </div>
                             </div>
                         </div>
-                        <div class="add" data-action="add-topic">
+                        <button onclick="showNewRow('.new-topic-row')" class="add" data-action="add-topic">
                             <img src="/assets/plus.svg" alt="">
-                        </div>
+                        </button>
                     </section>
                 </div>
             <?php endif; ?>
@@ -88,3 +101,8 @@
     <?php endif?>
 </div>
 
+<div id="context-menu" class="context-menu">
+    <ul>
+        <li id="cm-delete" class="cm-danger">Удалить</li>
+    </ul>
+</div>
