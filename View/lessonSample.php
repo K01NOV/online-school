@@ -1,72 +1,113 @@
-<?php
-    // Имитируем данные, которые якобы пришли из JSON
-    $data = [
-        'video_id' => 'u_S86_Nl_3E', // Пример обучающего видео про двоичную систему
-        'audio_url' => '/assets/audio/binary_intro.mp3',
-        'text_block_1' => 'Системы счисления — это способы записи чисел с помощью специальных знаков. Мы привыкли к десятичной системе, где используются цифры от 0 до 9. Однако компьютеры «общаются» на другом языке — двоичном. В нём всего две цифры: 0 и 1. Это связано с тем, что внутри процессора есть только два состояния: «сигнал есть» (1) и «сигнала нет» (0).',
-        'image_url' => 'https://img.freepik.com/free-vector/binary-code-concept-illustration_114360-685.jpg', 
-        'text_block_2' => 'Чтобы перевести число из десятичной системы в двоичную, нужно последовательно делить это число на 2 и записывать остатки в обратном порядке. Например, число 5 в двоичной системе будет выглядеть как 101. Понимание этого процесса — это первый шаг к изучению того, как работают алгоритмы и компьютерная память.',
-        'summary_list' => [
-            'Узнали, что такое основание системы счисления',
-            'Поняли, почему компьютер использует именно 0 и 1',
-            'Разобрали метод «деления столбиком» для перевода чисел'
-        ],
-        'quiz' => [
-            'question' => 'Как будет выглядеть число 2 в двоичной системе счисления?',
-            'answer' => '10'
-        ]
-    ];
-?>
-
 <div class="lesson-page-container">
-    <h1>Основы систем счисления</h1>
+    <?php 
+        foreach($content as $piece){
+            $type = $piece['type'];
+            if(isset($piece['value'])){
+                $value = $piece['value'];
+            }
+            switch($type){
+                case 'header':
+                    echo "<h1>$value</h1>";
+                    break;
+                //case 'video':
+                    $title = $piece['title'];
+                    echo "
+                        <div class=\"lesson-video-wrapper\">
+                            <video controls width=\"640\" height=\"360\">
+                                <source src=\"https://cloud.mail.ru/home/video/%D1%88%D0%B8%D1%84%D1%80%20%D1%86%D0%B5%D0%B7%D0%B0%D1%80%D1%8F.mp4\" type=\"video/mp4\">
+                                Ваш браузер не поддерживает встроенное видео.
+                            </video>
+                        </div>
 
-    <div class="lesson-progress-container">
-        <div class="lesson-progress-bar" id="myBar"></div>
-    </div>
+                    ";
+                    break;
+                case 'image':
+                    echo "
+                        <img src=\"$value\" class=\"lesson-image\" referrerpolicy=\"no-referrer\">
+                    ";
+                    break;
+                //case 'audio':
+                    echo "
+                        <iframe class=\"lesson-audio-card\" src=\"https://drive.google.com/file/d/$value/preview\" 
+                                allow=\"autoplay\">
+                        </iframe>
+                    ";
+                    break;
+                case 'quiz':
+                    $quizzes[] = $piece;
+                    break;
+                case 'short':
+                    $shortForm = $piece;
+                    break;
+                case 'list':
+                    echo "
+                        <h3>$value</h3><ul>
+                    ";
+                    foreach($piece['li'] as $li){
+                        echo "<li>$li</li>";
+                    }
+                    echo "</ul>";
+                    break;
+                case 'text':
+                    echo "
+                        <p>$value</p>
+                    ";
+                    break;
+            }
 
-    <div class="lesson-video-wrapper">
-        <video controls poster="/assets/img/video-placeholder.jpg" style="width:100%; height:100%; border-radius: 25px;">
-            <source src="https://drive.google.com/uc?export=download&id=<?= $data['video_drive_id'] ?>" type="video/mp4">
-            Ваш браузер не поддерживает встроенные видео.
-        </video>
-    </div>
-
-    <div class="lesson-audio-card">
-        <strong>🎧 Слушать урок:</strong>
-        <audio controls src="<?= $data['audio_url'] ?>"></audio>
-    </div>
-
-    <div class="lesson-text-content">
-        <p><?= $data['text_block_1'] ?></p>
-        
-        <?php if(!empty($data['image_url'])): ?>
-            <img src="<?= $data['image_url'] ?>" class="lesson-image">
-        <?php endif; ?>
-
-        <p><?= $data['text_block_2'] ?></p>
-    </div>
-
-    <?php if ($lesson['interactive_slug'] !== 'none'): ?>
-        <div id="interactive-root"></div>
-        <script src="/assets/interactives/<?= $lesson['interactive_slug'] ?>/script.js"></script>
-    <?php endif; ?>
-
-    <div class="lesson-summary-plate">
-        <h3>Коротко о главном:</h3>
-        <ul>
-            <?php foreach($data['summary_list'] as $item): ?>
-                <li><?= $item ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
+        }
+        if(isset($shortForm)){
+            echo "<div class=\"lesson-summary-plate\">
+                <h3>Коротко о главном:</h3>
+                <ul>";
+            foreach($shortForm['value'] as $li){
+                echo "<li>$li</li>";
+            }
+            echo "</ul></div>";
+        }
+    ?>
 
     <button class="lesson-primary-btn" onclick="showQuiz()">Урок пройден!</button>
-
     <div id="quiz-block" class="lesson-quiz-box">
         <h3>Проверка знаний</h3>
-        <p><?= $data['quiz']['question'] ?></p>
-        <input type="text" id="user-answer" placeholder="Введите ответ...">
-        <button class="lesson-primary-btn" onclick="checkAnswer('<?= $data['quiz']['answer'] ?>')">Проверить</button>
+        <?php foreach($quizzes as $i => $quiz): ?>
+            <div class="quiz-item" id="quiz-<?= $i ?>">
+                <p><strong><?= $quiz['q'] ?></strong></p>
+                <div class="quiz-feedback" style="font-weight: bold; margin-bottom: 10px; min-height: 1.2em;"></div>
+                <?php 
+                $correct = $quiz['correct'];
+                
+                if($quiz['subtype'] == 'input'): ?>
+                    <input type="text" class="quiz-answer-input" placeholder="Введите ответ...">
+                    <button class="lesson-primary-btn" onclick="checkAnswer(this, '<?= $correct ?>')">Проверить</button>
+
+                <?php elseif($quiz['subtype'] == 'choice'): 
+                    $type = is_array($correct) ? 'checkbox' : 'radio';
+                    $name = "quiz_group_" . $i;
+                    
+                    foreach($quiz['a'] as $a): ?>
+                        <label style="display: flex; gap: 20px">
+                            <input type="<?= $type ?>" name="<?= $name ?>" value="<?= $a ?>"> 
+                            <?= $a ?>
+                        </label>
+                    <?php endforeach; ?>
+                    <button class="lesson-primary-btn" onclick="checkAnswer(this, <?= htmlspecialchars(json_encode($correct)) ?>)">Проверить</button>
+                <?php endif; ?>
+            </div>
+            <br>
+            <hr>
+        <?php endforeach; ?>
+    </div>
+
+    <div id="final-result-card" class="lesson-result-box">
+        <h3>Урок завершен</h3>
+        <div style="font-size: 24px; margin: 15px 0;">
+            Ваш результат: <span id="percent-result" style="font-weight: bold; color: #3498db;">0%</span>
+        </div>
+        <p id="result-comment"></p>
+        
+        <a href="/subject-info?id=<?= htmlspecialchars($subject_id) ?>" id="back-to-subject" class="lesson-primary-btn" style="pointer-events: none; background: dodgerblue">
+            Вернуться к предмету
+        </a>
     </div>
 </div>
