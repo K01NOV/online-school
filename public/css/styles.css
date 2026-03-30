@@ -213,19 +213,95 @@ button { cursor: pointer; }
 /* ==========================================================================
    5. СТРАНИЦА РЕГИСТРАЦИИ / АВТОРИЗАЦИИ
    ========================================================================== */
+/* Контейнер для центровки двух форм */
 .reg-auth-container {
     display: flex;
     justify-content: center;
-    align-items: baseline;
-    padding-top: 15vh; /* Используем vh для центровки по высоте */
-    gap: 100px;
+    align-items: flex-start;
+    padding: 10vh 20px;
+    gap: 40px; /* Уменьшил со 100px для мобильности, но можно вернуть */
+    flex-wrap: wrap; /* Чтобы на узких экранах формы вставали друг под друга */
+    font-family: 'Inter', sans-serif;
 }
 
+/* Общий стиль для обеих форм */
 .reg-auth-form {
+    background: white;
+    padding: 40px;
+    border-radius: 30px; /* В стиле твоего sidebar */
+    box-shadow: 0px 4px 20px 5px rgba(34, 60, 80, 0.1);
+    width: 100%;
+    max-width: 350px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    text-align: center;
+    gap: 15px;
+    transition: 0.3s;
+}
+
+.reg-auth-form h3 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    color: #333;
+    font-weight: 700;
+}
+
+/* Стили для текстовых полей и селектора */
+.reg-auth-form input[type="text"],
+.reg-auth-form input[type="email"],
+.reg-auth-form input[type="password"],
+.reg-auth-form select {
+    height: 50px;
+    padding: 0 20px;
+    border-radius: 25px; /* Закругленные как поиск */
+    border: 1px solid #eee;
+    background: #f9f9f9;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+    color: #555;
+}
+
+.reg-auth-form input:focus, 
+.reg-auth-form select:focus {
+    border-color: dodgerblue;
+    background: white;
+    box-shadow: 0 0 8px rgba(30, 144, 255, 0.2);
+}
+
+/* Специфично для селектора (чтобы не выбивался) */
+.reg-auth-form select {
+    pointer-events: none; 
+    background-color: #f0f0f0;
+}
+
+/* Кнопка отправить (Submit) */
+.reg-auth-form input[type="submit"] {
+    margin-top: 10px;
+    height: 55px;
+    background: #FF9100;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 145, 0, 0.3);
+}
+
+.reg-auth-form input[type="submit"]:hover {
+    background: #e68200;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 145, 0, 0.4);
+}
+
+/* Сообщение об ошибке */
+.reg-auth-form p {
+    background: rgba(240, 120, 93, 0.1);
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 14px;
+    margin: 0;
 }
 
 /* ==========================================================================
@@ -384,14 +460,14 @@ button { cursor: pointer; }
     display: grid;
     grid-template-rows: 0fr; /* Изначально схлопнуто */
     transition: grid-template-rows 0.4s ease-in-out, padding 0.4s ease-in-out;
-    padding: 0 0 0 50px; 
+    padding: 0 0 0 0px; 
     overflow: hidden;
     background: #fff;
 }
 
 .topic-item.open .lessons-list {
     grid-template-rows: 1fr; /* Плавно раскрываем */
-    padding: 10px 0 10px 50px;
+    padding: 10px 0 10px 0px;
 }
 
 .lessons-list-inner {
@@ -408,6 +484,7 @@ button { cursor: pointer; }
     color: #444;
     border-radius: 15px;
     transition: background 0.2s;
+    margin-left: 50px;
 }
 
 .lesson-link:hover { background: rgba(255, 145, 0, 0.1); }
@@ -518,6 +595,9 @@ button { cursor: pointer; }
     padding: 50px;
     border-radius: 40px;
     box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
 .lesson-page-container h1 {
@@ -531,10 +611,11 @@ button { cursor: pointer; }
 /* Видео */
 .lesson-video-wrapper {
     position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Современная замена padding-bottom */
     background: #000;
+    overflow: hidden;
+    border-radius: 8px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.1);
 }
 
@@ -545,19 +626,10 @@ button { cursor: pointer; }
 }
 
 /* Озвучка */
+/* Контейнер для аудио */
 .lesson-audio-card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: #f1f3f5;
-    padding: 15px 25px;
-    border-radius: 100px;
-    margin: 35px 0;
-}
-
-.lesson-audio-card audio {
-    flex-grow: 1;
-    height: 35px;
+    height: 80px;
+    width: 100%;
 }
 
 /* Текстовые блоки */
@@ -576,67 +648,85 @@ button { cursor: pointer; }
 
 /* Блок "Что узнали" */
 .lesson-summary-plate {
-    background: #94D2BD; /* Твой мятный из палитры */
+    background: linear-gradient(135deg, dodgerblue 0%, #007bff 100%);
     padding: 30px;
     border-radius: 30px;
     margin: 40px 0;
     font-size: 19px;
     color: white;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    box-shadow: 0px 10px 30px rgba(30, 144, 255, 0.3);
 }
 
 .lesson-summary-plate h3 {
     margin-top: 0;
-    color: #005F73;
-    font-size: 22px;
-    font-weight: bold;
+    color: white; /* Белый текст на синем фоне читается лучше */
+    font-size: 24px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Кнопки и Задания */
 .lesson-primary-btn {
     display: block;
     width: 100%;
-    background: #005F73;
+    background: #FF9100;
     color: white;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 25px;
     border: none;
     font-size: 20px;
     font-weight: 700;
+    cursor: pointer;
     transition: 0.3s;
     text-align: center;
+    box-shadow: 0px 4px 15px rgba(255, 145, 0, 0.3);
 }
 
 .lesson-primary-btn:hover {
-    background: #001219;
+    background: #e68200;
     transform: translateY(-3px);
+    box-shadow: 0px 8px 25px rgba(255, 145, 0, 0.4);
 }
 
 .lesson-quiz-box {
     margin-top: 30px;
-    background: #E9D8A6; /* Песочный */
+    background: white; 
     padding: 35px;
     border-radius: 30px;
-    display: none; /* Скрыто до клика */
-    color: #CA6702;
+    display: none;
+    color: #333;
     font-size: 19px;
-    font-weight: bold;
+    box-shadow: 0px 4px 20px 5px rgba(34, 60, 80, 0.1); /* Твоя фирменная тень */
+    border: 2px solid #f0f0f0;
 }
 
 .lesson-quiz-box input {
     box-sizing: border-box;
     width: 100%;
-    padding: 15px;
-    border-radius: 15px;
-    border: 1px solid rgba(0,0,0,0.1);
+    padding: 15px 20px;
+    border-radius: 20px;
+    border: 2px solid #eee;
     margin-bottom: 15px;
-    font-size: 19px;
+    font-size: 18px;
     outline: none; 
     transition: all 0.3s ease;
+    background: #f9f9f9;
 }
 
 .lesson-quiz-box input:focus {
-    box-shadow: 0 0 15px rgba(202, 103, 2, 0.4);
+    border-color: dodgerblue;
+    background: white;
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.2);
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.lesson-quiz-box.active { /* Добавляй этот класс через JS */
+    display: block;
+    animation: slideDown 0.4s ease forwards;
 }
 
 /* ==========================================================================
@@ -1109,4 +1199,92 @@ button { cursor: pointer; }
 @media (max-width: 768px) {
     .hero-title { font-size: 2.2rem; }
     .landing-header { flex-direction: column; gap: 20px; border-radius: 20px; }
+}
+
+
+
+
+
+.new-topic-row, .new-lesson-row {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+    margin-bottom: 0;
+}
+
+/* Состояние, когда мы его показываем */
+.new-topic-row.visible, .new-lesson-row.visible {
+    max-height: 200px; /* Достаточное значение, чтобы влез инпут */
+    opacity: 1;
+    margin-bottom: 20px; /* Или твой стандартный отступ */
+}
+
+
+
+
+
+.context-menu {
+    display: none;
+    position: absolute;
+    z-index: 2000;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 20px rgba(34, 60, 80, 0.15);
+    padding: 10px 0;
+    min-width: 150px;
+}
+
+.context-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.context-menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.context-menu li:hover {
+    background: #f0f0f0;
+}
+
+.context-menu .cm-danger {
+    color: #ff4b4b;
+}
+
+.context-menu .cm-danger:hover {
+    background: #fff0f0;
+}
+
+
+
+input[type="radio"], input[type="checkbox"]{
+    margin: 0;
+    width: min-content;
+}
+
+.quiz-item{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.lesson-result-box{
+    box-sizing: border-box;
+    display: none; 
+    margin-top: 30px; 
+    padding: 20px; 
+    border-radius: 10px; 
+    background: #f9f9f9; 
+    text-align: center; 
+    border: 2px solid #3498db;
+}
+
+#back-to-subject{
+    background-color: dodgerblue;
+    width: auto;
 }
