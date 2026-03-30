@@ -2,6 +2,7 @@
 
 use Api\TableApi;
 use App\Control\ApiControl;
+use App\Control\LessonController;
 use App\Control\OfficeControl;
 use App\Control\SearchController;
 use App\Control\UserController;
@@ -24,7 +25,7 @@ class Router{
         'login' => [UserController::class, 'login'],
         'logout' => [UserController::class, 'logout'],
         'subject-info' => [SubjectController::class, 'subject_info'],
-        'lesson' => [PagesController::class, 'showLesson'],
+        'lesson' => [LessonController::class, 'load_lesson'],
         'search-results' => [SearchController::class, 'prepare_searchResults'],
         'back-office' => [OfficeControl::class, 'run_admin'],
         'api' => [ApiControl::class, 'run_api'],
