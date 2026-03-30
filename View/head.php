@@ -28,7 +28,7 @@
             <a href="#" class="nav-btn"><h2>Тесты</h2></a>
             <a href="#" class="nav-btn"><h2>Тетради</h2></a>
             <a href="#" class="nav-btn"><h2>Видеотека</h2></a>
-            <a href="#" class="nav-btn nav-btn--special"><h2>Проверить сочинение</h2></a>
+            <a href="#" class="nav-btn"><h2>Проверить сочинение</h2></a>
         </nav>
         <nav class="classes-row">
             <a href="/<?=urldecode($a)?>" class="class-pill">Все</a>

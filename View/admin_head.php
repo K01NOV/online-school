@@ -21,7 +21,7 @@
                 <a href="/back-office/subjects" class="nav-btn"><h2>Предметы</h2></a>
                 <a href="#" class="nav-btn"><h2>Пользователи</h2></a>
                 <a href="/back-office" class="nav-btn"><h2>Домой</h2></a>
-                <a href="#" class="nav-btn nav-btn--special"><h2>Почта</h2></a>
+                <a href="#" class="nav-btn"><h2>Почта</h2></a>
             </nav>
             <nav class="navigation-row">
                 <a href="#" class="nav-btn"><h2>Достижения</h2></a>
